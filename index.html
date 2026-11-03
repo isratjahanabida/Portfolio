@@ -1,0 +1,1285 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth scroll-pt-[110px]" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="Israt Jahan Abida - CSE Undergraduate Portfolio" name="description"/>
+<title>Israt Jahan Abida | Portfolio</title>
+<!-- Tailwind CSS: pre-built static stylesheet (via Tailwind CLI) -->
+<link href="style.css" rel="stylesheet"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Playfair+Display:wght@500;600;700&amp;display=swap" rel="stylesheet"/>
+
+<style>
+    .showcase-panel { display: none; }
+    #showcase-skills:target,
+    #showcase-projects:target,
+    #showcase-experiences:target,
+    #showcase-certificates:target,
+    #showcase-papers:target { display: block; }
+  
+    /* Management controls intentionally hidden: portfolio is presentation-only. */
+    #addProjectBtn, #addCertificateBtn, #projectModal, #certificateModal { display:none !important; }
+    .certificate-edit-btn { display:none !important; }
+</style>
+<style>
+    /* Final layout corrections — preserves the existing portfolio design. */
+    .hero-actions {
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: 14px !important;
+      margin-top: 31px !important;
+    }
+    .hero-actions-secondary {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: 14px !important;
+      flex-wrap: wrap !important;
+    }
+    .hero-action-btn {
+      min-width: 138px !important;
+      height: 58px !important;
+      padding: 0 24px !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      white-space: nowrap !important;
+      box-sizing: border-box !important;
+      margin: 0 !important;
+    }
+    .hero-action-btn.more-about { min-width: 210px !important; }
+    .hero-action-btn.resume { min-width: 135px !important; }
+    .hero-action-btn.contact { min-width: 140px !important; }
+
+    .skill-percent { color: #765c68 !important; font-weight: 800 !important; }
+    .skill-bar { background: #9b7886 !important; }
+
+    /* Work Experience: explicit layout so the card cannot collapse into the panel edge. */
+    #showcase-experiences {
+      padding: 36px !important;
+      box-sizing: border-box !important;
+    }
+    .experience-heading {
+      display: flex !important;
+      align-items: flex-end !important;
+      justify-content: space-between !important;
+      gap: 25px !important;
+      margin-bottom: 30px !important;
+    }
+    .experience-card {
+      width: 100% !important;
+      box-sizing: border-box !important;
+      padding: 28px 32px !important;
+      margin: 0 !important;
+      display: grid !important;
+      grid-template-columns: minmax(0, 1fr) auto !important;
+      grid-template-rows: auto auto !important;
+      column-gap: 28px !important;
+      row-gap: 7px !important;
+      align-items: center !important;
+      background: linear-gradient(135deg, rgba(255,253,249,.78), rgba(214,198,190,.48)) !important;
+      border: 1px solid rgba(118,92,104,.28) !important;
+      border-radius: 20px !important;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.82), 0 18px 45px rgba(71,57,47,.12) !important;
+    }
+    .experience-card h5 { grid-column: 1 / -1 !important; margin: 0 !important; }
+    .experience-card p { grid-column: 1 / -1 !important; margin: 0 !important; }
+    .experience-card small { grid-column: 1 / -1 !important; display: block !important; margin-top: 4px !important; }
+
+    .paper-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+      align-items: start !important;
+    }
+    .paper-card { max-width: 100% !important; }
+    .paper-future-slot {
+      min-height: 100% !important;
+      min-height: 260px !important;
+      box-sizing: border-box !important;
+    }
+    .future-paper-btn {
+      border: 0 !important;
+      font: inherit !important;
+      cursor: pointer !important;
+      width: 100% !important;
+      color: inherit !important;
+    }
+    .future-paper-btn:focus-visible {
+      outline: 2px solid rgba(118,92,104,.55) !important;
+      outline-offset: 4px !important;
+    }
+    .paper-add-icon {
+      width: 58px !important;
+      height: 58px !important;
+      flex: none !important;
+      display: grid !important;
+      place-items: center !important;
+      margin-bottom: 12px !important;
+      border-radius: 50% !important;
+      border: 1px solid rgba(118,92,104,.28) !important;
+      background: linear-gradient(135deg, rgba(255,253,249,.82), rgba(213,198,184,.55)) !important;
+      color: #765c68 !important;
+      font-size: 27px !important;
+      font-weight: 500 !important;
+      line-height: 1 !important;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.85), 0 8px 22px rgba(71,57,47,.10) !important;
+      transition: transform .25s ease, box-shadow .25s ease, background .25s ease !important;
+    }
+    .future-paper-btn:hover .paper-add-icon {
+      transform: translateY(-2px) scale(1.04) !important;
+      background: linear-gradient(135deg, rgba(255,253,249,.96), rgba(213,198,184,.72)) !important;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.90), 0 12px 28px rgba(71,57,47,.14) !important;
+    }
+    .certificate-add-slot {
+      border: 0 !important;
+      font: inherit !important;
+      cursor: pointer !important;
+      width: 100% !important;
+      color: inherit !important;
+    }
+    .certificate-add-slot:focus-visible {
+      outline: 2px solid rgba(118,92,104,.55) !important;
+      outline-offset: 4px !important;
+    }
+    .certificate-add-icon {
+      width: 58px !important;
+      height: 58px !important;
+      flex: none !important;
+      display: grid !important;
+      place-items: center !important;
+      margin-bottom: 12px !important;
+      border-radius: 50% !important;
+      border: 1px solid rgba(118,92,104,.28) !important;
+      background: linear-gradient(135deg, rgba(255,253,249,.82), rgba(213,198,184,.55)) !important;
+      color: #765c68 !important;
+      font-size: 27px !important;
+      font-weight: 500 !important;
+      line-height: 1 !important;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.85), 0 8px 22px rgba(71,57,47,.10) !important;
+      transition: transform .25s ease, box-shadow .25s ease, background .25s ease !important;
+    }
+    .certificate-add-slot:hover .certificate-add-icon {
+      transform: translateY(-2px) scale(1.04) !important;
+      background: linear-gradient(135deg, rgba(255,253,249,.96), rgba(213,198,184,.72)) !important;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.90), 0 12px 28px rgba(71,57,47,.14) !important;
+    }
+    .certificate-card {
+      min-height: 190px !important;
+      display: flex !important;
+      flex-direction: column !important;
+      justify-content: space-between !important;
+      box-sizing: border-box !important;
+      padding: 20px !important;
+      border: 1px solid rgba(118,92,104,.18) !important;
+      border-radius: 18px !important;
+      background: linear-gradient(135deg, rgba(255,253,249,.60), rgba(238,224,214,.34)) !important;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.70), 0 14px 35px rgba(71,57,47,.08) !important;
+    }
+    .certificate-image-wrap {
+      width: 100% !important;
+      height: 165px !important;
+      overflow: hidden !important;
+      border-radius: 13px !important;
+      background: rgba(235,224,213,.45) !important;
+      border: 1px solid rgba(118,92,104,.12) !important;
+    }
+    .certificate-image {
+      width: 100% !important;
+      height: 100% !important;
+      display: block !important;
+      object-fit: contain !important;
+      object-position: center !important;
+    }
+    .certificate-image-placeholder {
+      width: 100% !important;
+      height: 100% !important;
+      display: grid !important;
+      place-items: center !important;
+      color: #765c68 !important;
+      font-size: 10px !important;
+      font-weight: 800 !important;
+      letter-spacing: .08em !important;
+      text-transform: uppercase !important;
+    }
+    .certificate-view-btn {
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      min-height: 38px !important;
+      padding: 0 14px !important;
+      border-radius: 10px !important;
+      background: #403734 !important;
+      color: #f4eae1 !important;
+      font-size: 10px !important;
+      font-weight: 800 !important;
+      text-decoration: none !important;
+    }
+    .certificate-modal[hidden] { display: none !important; }
+    .certificate-image-modal[hidden] { display: none !important; }
+    .certificate-image-modal {
+      position: fixed !important;
+      inset: 0 !important;
+      z-index: 10001 !important;
+      display: grid !important;
+      place-items: center !important;
+      padding: 24px !important;
+      background: rgba(45,37,33,.78) !important;
+      backdrop-filter: blur(10px) !important;
+      -webkit-backdrop-filter: blur(10px) !important;
+    }
+    .certificate-image-dialog {
+      position: relative !important;
+      width: min(92vw, 1050px) !important;
+      height: min(92vh, 820px) !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      padding: 20px !important;
+      border: 1px solid rgba(255,255,255,.35) !important;
+      border-radius: 22px !important;
+      background: rgba(248,239,231,.18) !important;
+      box-shadow: 0 30px 90px rgba(0,0,0,.28) !important;
+    }
+    .certificate-image-dialog img {
+      max-width: 100% !important;
+      max-height: 100% !important;
+      width: auto !important;
+      height: auto !important;
+      object-fit: contain !important;
+      border-radius: 10px !important;
+      box-shadow: 0 16px 45px rgba(0,0,0,.22) !important;
+      background: rgba(255,255,255,.12) !important;
+    }
+    .certificate-image-close {
+      position: absolute !important;
+      top: 12px !important;
+      right: 12px !important;
+      width: 40px !important;
+      height: 40px !important;
+      display: grid !important;
+      place-items: center !important;
+      border-radius: 50% !important;
+      border: 1px solid rgba(255,255,255,.45) !important;
+      background: rgba(255,253,249,.72) !important;
+      color: #403734 !important;
+      font-size: 20px !important;
+      cursor: pointer !important;
+      z-index: 2 !important;
+    }
+    .certificate-modal {
+      position: fixed !important;
+      inset: 0 !important;
+      z-index: 9999 !important;
+      display: grid !important;
+      place-items: center !important;
+      padding: 20px !important;
+      background: rgba(53,44,40,.38) !important;
+      backdrop-filter: blur(8px) !important;
+    }
+    .certificate-dialog {
+      width: min(620px, 100%) !important;
+      max-height: min(88vh, 760px) !important;
+      overflow: auto !important;
+      padding: 28px !important;
+      box-sizing: border-box !important;
+      border: 1px solid rgba(255,255,255,.78) !important;
+      border-radius: 24px !important;
+      background: linear-gradient(135deg, rgba(248,239,230,.97), rgba(224,208,199,.96)) !important;
+      box-shadow: 0 28px 80px rgba(71,57,47,.25) !important;
+    }
+    .certificate-form { display: grid !important; gap: 13px !important; }
+    .certificate-form label { display: grid !important; gap: 6px !important; }
+    .certificate-form input, .certificate-form textarea {
+      width: 100% !important;
+      box-sizing: border-box !important;
+      border: 1px solid rgba(89,79,73,.15) !important;
+      border-radius: 11px !important;
+      padding: 11px 12px !important;
+      outline: none !important;
+      background: rgba(255,255,255,.58) !important;
+      color: #332d2a !important;
+      font: inherit !important;
+      font-size: 12px !important;
+    }
+    .certificate-form textarea { min-height: 90px !important; resize: vertical !important; }
+    .certificate-actions {
+      display: flex !important;
+      justify-content: flex-end !important;
+      gap: 10px !important;
+      margin-top: 4px !important;
+    }
+    .certificate-actions button {
+      min-height: 42px !important;
+      padding: 0 16px !important;
+      border-radius: 11px !important;
+      border: 1px solid rgba(89,79,73,.13) !important;
+      font: inherit !important;
+      font-size: 11px !important;
+      font-weight: 800 !important;
+      cursor: pointer !important;
+    }
+    .future-paper-modal[hidden] { display: none !important; }
+    .future-paper-modal {
+      position: fixed !important;
+      inset: 0 !important;
+      z-index: 9999 !important;
+      display: grid !important;
+      place-items: center !important;
+      padding: 20px !important;
+      background: rgba(53,44,40,.38) !important;
+      backdrop-filter: blur(8px) !important;
+    }
+    .future-paper-dialog {
+      width: min(620px, 100%) !important;
+      max-height: min(88vh, 760px) !important;
+      overflow: auto !important;
+      padding: 28px !important;
+      box-sizing: border-box !important;
+      border: 1px solid rgba(255,255,255,.78) !important;
+      border-radius: 24px !important;
+      background: linear-gradient(135deg, rgba(248,239,230,.97), rgba(224,208,199,.96)) !important;
+      box-shadow: 0 28px 80px rgba(71,57,47,.25) !important;
+    }
+    .future-paper-form { display: grid !important; gap: 13px !important; }
+    .future-paper-form label { display: grid !important; gap: 6px !important; }
+    .future-paper-form input, .future-paper-form textarea {
+      width: 100% !important;
+      box-sizing: border-box !important;
+      border: 1px solid rgba(89,79,73,.15) !important;
+      border-radius: 11px !important;
+      padding: 11px 12px !important;
+      outline: none !important;
+      background: rgba(255,255,255,.58) !important;
+      color: #332d2a !important;
+      font: inherit !important;
+      font-size: 12px !important;
+    }
+    .future-paper-form textarea { min-height: 90px !important; resize: vertical !important; }
+    .future-paper-actions {
+      display: flex !important;
+      justify-content: flex-end !important;
+      gap: 10px !important;
+      margin-top: 4px !important;
+    }
+    .future-paper-actions button {
+      min-height: 42px !important;
+      padding: 0 16px !important;
+      border-radius: 11px !important;
+      border: 1px solid rgba(89,79,73,.13) !important;
+      font: inherit !important;
+      font-size: 11px !important;
+      font-weight: 800 !important;
+      cursor: pointer !important;
+    }
+    .future-paper-cancel { background: rgba(255,255,255,.48) !important; color: #5e514b !important; }
+    .future-paper-save { background: #403734 !important; color: #f4eae1 !important; }
+    @media (max-width: 650px) {
+      .hero-action-btn { min-width: 0 !important; }
+      .hero-action-btn.more-about { width: min(210px, 100%) !important; }
+      .hero-actions-secondary { width: 100% !important; }
+      .hero-actions-secondary .hero-action-btn { width: min(160px, calc(50% - 7px)) !important; }
+      #showcase-experiences { padding: 25px 18px !important; }
+      .experience-heading { align-items: flex-start !important; flex-direction: column !important; margin-bottom: 24px !important; }
+      .experience-card { padding: 24px 20px !important; grid-template-columns: 1fr !important; }
+      .paper-grid { grid-template-columns: 1fr !important; }
+      .future-paper-dialog, .certificate-dialog { padding: 22px !important; }
+    }
+  
+
+    /* ==================== FINAL CARD + HORIZONTAL SWIPE FIXES ==================== */
+    /* Make cards visibly different from their section/panel backgrounds. */
+    #showcase-skills > div:nth-of-type(2) > *,
+    #showcase-projects > div:nth-of-type(2) > *,
+    .certificate-grid-horizontal > *,
+    .paper-grid > * {
+      background: linear-gradient(145deg, rgba(255,253,249,.86), rgba(224,209,199,.62)) !important;
+      border-color: rgba(118,92,104,.24) !important;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.82), 0 14px 34px rgba(71,57,47,.11) !important;
+    }
+    #showcase-skills > div:nth-of-type(2) > div:not(.skill-add-slot) {
+      background: linear-gradient(145deg, rgba(255,253,249,.90), rgba(226,211,201,.68)) !important;
+    }
+    .certificate-card {
+      background: linear-gradient(145deg, rgba(255,253,249,.92), rgba(225,209,199,.68)) !important;
+    }
+    .paper-card {
+      background: linear-gradient(145deg, rgba(255,253,249,.92), rgba(225,209,199,.68)) !important;
+    }
+
+    /* No scrollbar line: movement is still possible by mouse drag, wheel, touch and trackpad. */
+    .certificate-grid-horizontal,
+    .paper-grid,
+    #showcase-skills > div:nth-of-type(2),
+    #showcase-projects > div:nth-of-type(2) {
+      scrollbar-width: none !important;
+      -ms-overflow-style: none !important;
+      scroll-snap-type: none !important;
+      cursor: grab !important;
+      padding-bottom: 4px !important;
+    }
+    .certificate-grid-horizontal::-webkit-scrollbar,
+    .paper-grid::-webkit-scrollbar,
+    #showcase-skills > div:nth-of-type(2)::-webkit-scrollbar,
+    #showcase-projects > div:nth-of-type(2)::-webkit-scrollbar { display:none !important; width:0 !important; height:0 !important; }
+    .is-dragging { cursor: grabbing !important; user-select:none !important; }
+
+    /* Small action controls for dynamic cards. */
+    .dynamic-skill-card { position:relative !important; }
+    .skill-card-actions, .paper-card-actions {
+      display:flex !important; gap:7px !important; margin-top:14px !important; flex-wrap:wrap !important;
+    }
+    .mini-card-btn {
+      border:1px solid rgba(118,92,104,.20) !important;
+      border-radius:999px !important;
+      background:rgba(255,255,255,.58) !important;
+      color:#5f5350 !important;
+      padding:7px 11px !important;
+      font:inherit !important;
+      font-size:9px !important;
+      font-weight:800 !important;
+      cursor:pointer !important;
+      transition:all .22s ease !important;
+    }
+    .mini-card-btn:hover { background:#473f3c !important; color:#fff !important; transform:translateY(-1px) !important; }
+    .skill-remove-btn { top:14px !important; right:14px !important; }
+
+    /* Keep add slots distinct and clickable. */
+    .skill-add-slot, .certificate-add-slot, .future-paper-btn {
+      background:linear-gradient(145deg, rgba(255,253,249,.62), rgba(211,193,181,.34)) !important;
+      border:1px dashed rgba(118,92,104,.34) !important;
+    }
+
+    /* ==================== AESTHETIC HORIZONTAL CAROUSELS ==================== */
+    .certificate-grid-horizontal, .paper-grid, #showcase-skills > div:nth-of-type(2), #showcase-projects > div:nth-of-type(2) {
+      cursor: grab !important;
+      scroll-behavior: smooth !important;
+      scroll-padding-inline: 8px !important;
+    }
+    .certificate-grid-horizontal:active, .paper-grid:active, #showcase-skills > div:nth-of-type(2):active, #showcase-projects > div:nth-of-type(2):active { cursor: grabbing !important; }
+    .certificate-grid-horizontal > *, .paper-grid > *, #showcase-skills > div:nth-of-type(2) > *, #showcase-projects > div:nth-of-type(2) > * {
+      transition: transform .45s cubic-bezier(.2,.75,.2,1), opacity .45s ease, box-shadow .45s ease !important;
+    }
+    .certificate-grid-horizontal > *:hover, .paper-grid > *:hover, #showcase-skills > div:nth-of-type(2) > *:hover, #showcase-projects > div:nth-of-type(2) > *:hover {
+      transform: translateY(-7px) scale(1.012) !important;
+      box-shadow: 0 22px 48px rgba(71,57,47,.14) !important;
+    }
+    .certificate-image-button { width:100% !important; height:100% !important; padding:0 !important; border:0 !important; background:transparent !important; cursor:zoom-in !important; display:block !important; }
+    .certificate-modal .certificate-dialog { animation: modalPop .42s cubic-bezier(.2,.8,.2,1) both; }
+    .certificate-image-modal .certificate-image-dialog { animation: modalPop .42s cubic-bezier(.2,.8,.2,1) both; }
+    @keyframes modalPop { from { opacity:0; transform:translateY(18px) scale(.96); } to { opacity:1; transform:none; } }
+    .certificate-close-btn, #certificateClose, #certificateImageClose, #skillClose, #futurePaperClose {
+      width:42px !important; height:42px !important; min-width:42px !important; padding:0 !important; flex:none !important;
+      display:grid !important; place-items:center !important; border-radius:50% !important;
+      border:1px solid rgba(118,92,104,.25) !important;
+      background:linear-gradient(135deg,rgba(255,253,249,.92),rgba(213,198,184,.68)) !important;
+      color:#5e514b !important; font-size:20px !important; font-weight:700 !important; line-height:1 !important;
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.9),0 9px 24px rgba(71,57,47,.12) !important;
+      cursor:pointer !important; transition:transform .25s ease, box-shadow .25s ease, background .25s ease !important;
+    }
+    .certificate-close-btn:hover, #certificateClose:hover, #certificateImageClose:hover, #skillClose:hover, #futurePaperClose:hover { transform:rotate(90deg) scale(1.06) !important; background:linear-gradient(135deg,#fffdf9,#d8c2c4) !important; box-shadow:0 14px 30px rgba(71,57,47,.18) !important; }
+    .certificate-actions .future-paper-cancel { cursor:pointer !important; transition:transform .22s ease, background .22s ease !important; }
+    .certificate-actions .future-paper-cancel:hover { transform:translateY(-2px) !important; background:rgba(255,255,255,.78) !important; }
+    @media (max-width:650px) {
+      .certificate-grid-horizontal > *, .paper-grid > *, #showcase-skills > div:nth-of-type(2) > *, #showcase-projects > div:nth-of-type(2) > * { transform:none !important; }
+    }
+
+    /* ==================== INTERACTION + RESPONSIVE UPGRADE ==================== */
+    html { scroll-behavior: smooth; }
+    body { scroll-behavior: smooth; }
+    .reveal-item { opacity: 0; transform: translate3d(0, 28px, 0); transition: opacity .75s cubic-bezier(.2,.7,.2,1), transform .75s cubic-bezier(.2,.7,.2,1); will-change: opacity, transform; }
+    .reveal-item.from-left { transform: translate3d(-42px, 0, 0); }
+    .reveal-item.from-right { transform: translate3d(42px, 0, 0); }
+    .reveal-item.revealed { opacity: 1; transform: translate3d(0,0,0); }
+    .hero-load { opacity: 0; transform: translateY(26px); animation: heroIn .8s cubic-bezier(.2,.75,.2,1) forwards; }
+    .hero-load:nth-child(2){animation-delay:.12s}.hero-load:nth-child(3){animation-delay:.22s}.hero-load:nth-child(4){animation-delay:.34s}.hero-load:nth-child(5){animation-delay:.46s}
+    @keyframes heroIn { to { opacity:1; transform:translateY(0); } }
+    .showcase-panel { animation: panelIn .55s ease both; }
+    @keyframes panelIn { from { opacity:0; transform:translateY(18px) scale(.99); } to { opacity:1; transform:none; } }
+
+    #showcase-skills > div:nth-of-type(2), #showcase-projects > div:nth-of-type(2) { overflow-x:auto; overflow-y:hidden; scrollbar-width:thin; scrollbar-color: rgba(118,92,104,.55) transparent; padding: 4px 3px 14px; }
+    #showcase-skills > div:nth-of-type(2) > *, #showcase-projects > div:nth-of-type(2) > * { flex: 0 0 clamp(270px, 31vw, 340px); scroll-snap-align:start; }
+    #showcase-skills > div:nth-of-type(2) { display:flex !important; gap:16px !important; }
+    #showcase-projects > div:nth-of-type(2) { display:flex !important; gap:17px !important; }
+    #showcase-skills > div:nth-of-type(2) > *, #showcase-projects > div:nth-of-type(2) > * { scroll-snap-align:start; }
+
+    .certificate-grid-horizontal, .paper-grid { display:flex !important; flex-wrap:nowrap !important; overflow-x:auto !important; overflow-y:hidden !important; gap:16px !important; padding:4px 4px 16px !important; scroll-snap-type:x mandatory; scrollbar-width:thin; scrollbar-color:rgba(118,92,104,.55) transparent; overscroll-behavior-x:contain; -webkit-overflow-scrolling:touch; }
+    .certificate-grid-horizontal > *, .paper-grid > * { flex:0 0 clamp(280px, 31vw, 360px) !important; min-width:0 !important; scroll-snap-align:start; }
+    .certificate-grid-horizontal .certificate-card { min-height:320px !important; }
+    .certificate-grid-horizontal .certificate-image-wrap { height:210px !important; }
+    .paper-grid .paper-card, .paper-grid .paper-future-slot { min-height:330px !important; }
+    .certificate-add-slot, .future-paper-btn, .skill-add-slot { flex:0 0 clamp(280px, 31vw, 360px) !important; }
+    .certificate-card { position:relative !important; }
+    .certificate-card-actions { display:flex !important; gap:8px !important; margin-top:14px !important; }
+    .certificate-edit-btn, .certificate-view-btn { flex:1 1 0 !important; border:0 !important; cursor:pointer !important; min-height:38px !important; border-radius:10px !important; font:inherit !important; font-size:10px !important; font-weight:800 !important; }
+    .certificate-edit-btn { background:rgba(255,255,255,.52) !important; color:#5e514b !important; border:1px solid rgba(89,79,73,.13) !important; }
+    .certificate-view-btn { background:#403734 !important; color:#f4eae1 !important; }
+    .skill-add-slot { min-height:190px !important; display:flex !important; flex-direction:column !important; align-items:center !important; justify-content:center !important; text-align:center !important; padding:22px !important; border:1px dashed rgba(118,92,104,.30) !important; border-radius:18px !important; background:rgba(255,253,249,.18) !important; color:inherit !important; cursor:pointer !important; font:inherit !important; transition:transform .25s ease, background .25s ease, box-shadow .25s ease !important; }
+    .skill-add-slot:hover { transform:translateY(-5px); background:rgba(255,255,255,.30) !important; box-shadow:0 18px 36px rgba(71,57,47,.10); }
+    .skill-add-icon { width:58px !important; height:58px !important; display:grid !important; place-items:center !important; border-radius:50% !important; border:1px solid rgba(118,92,104,.28) !important; background:linear-gradient(135deg,rgba(255,253,249,.82),rgba(213,198,184,.55)) !important; color:#765c68 !important; font-size:27px !important; box-shadow:inset 0 1px 0 rgba(255,255,255,.85),0 8px 22px rgba(71,57,47,.10) !important; }
+    .skill-add-title { margin-top:10px; font-size:14px; font-weight:800; color:#332d2a; }
+    .skill-add-text { max-width:230px; margin-top:6px; font-size:10px; line-height:1.7; color:#756963; }
+    .dynamic-skill-card { position:relative; }
+    .dynamic-skill-card .skill-icon-text { width:42px;height:42px;flex:none;display:grid;place-items:center;border-radius:11px;background:rgba(165,142,145,.22);border:1px solid rgba(255,255,255,.72);font-size:11px;font-weight:900;color:#765c68;overflow:hidden;text-align:center; }
+    .dynamic-skill-card .skill-remove-btn { position:absolute;top:10px;right:10px;width:25px;height:25px;border-radius:50%;border:1px solid rgba(118,92,104,.18);background:rgba(255,255,255,.5);color:#765c68;cursor:pointer; }
+    .paper-card, .certificate-card, #showcase-projects article, #showcase-skills > div:nth-of-type(2) > * { animation: cardFloatIn .65s cubic-bezier(.2,.7,.2,1) both; }
+    @keyframes cardFloatIn { from { opacity:0; transform:translateY(22px) scale(.985); } to { opacity:1; transform:none; } }
+    .paper-grid::-webkit-scrollbar, .certificate-grid-horizontal::-webkit-scrollbar, #showcase-skills > div:nth-of-type(2)::-webkit-scrollbar, #showcase-projects > div:nth-of-type(2)::-webkit-scrollbar { height:8px; }
+    .paper-grid::-webkit-scrollbar-thumb, .certificate-grid-horizontal::-webkit-scrollbar-thumb, #showcase-skills > div:nth-of-type(2)::-webkit-scrollbar-thumb, #showcase-projects > div:nth-of-type(2)::-webkit-scrollbar-thumb { background:rgba(118,92,104,.42); border-radius:999px; }
+    @media (max-width:650px) {
+      #showcase-skills > div:nth-of-type(2) > *, #showcase-projects > div:nth-of-type(2) > *, .certificate-grid-horizontal > *, .paper-grid > * { flex-basis:82vw !important; }
+      .certificate-grid-horizontal .certificate-image-wrap { height:220px !important; }
+      .hero-load { transform:translateY(18px); }
+    }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration:.01ms !important; animation-iteration-count:1 !important; scroll-behavior:auto !important; transition-duration:.01ms !important; } }
+
+    /* ==================== ACTIVE PORTFOLIO =================== */
+    .project-add-slot{min-height:330px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;border:1px dashed rgba(118,92,104,.38);border-radius:21px;background:linear-gradient(145deg,rgba(255,253,249,.72),rgba(211,193,181,.38));color:#332d2a;cursor:pointer;font:inherit;transition:transform .3s ease,box-shadow .3s ease,background .3s ease}
+    .project-add-slot:hover{transform:translateY(-7px);background:linear-gradient(145deg,rgba(255,253,249,.95),rgba(218,199,190,.60));box-shadow:0 22px 48px rgba(71,57,47,.14)}
+    .project-add-icon{width:60px;height:60px;display:grid;place-items:center;border-radius:50%;margin-bottom:13px;border:1px solid rgba(118,92,104,.28);background:linear-gradient(135deg,rgba(255,253,249,.92),rgba(213,198,184,.68));color:#765c68;font-size:28px;box-shadow:inset 0 1px 0 rgba(255,255,255,.9),0 10px 25px rgba(71,57,47,.12)}
+    .project-add-slot strong{font-size:15px;font-weight:900}.project-add-slot>span:last-child{max-width:240px;margin-top:7px;color:#756963;font-size:10px;line-height:1.7}
+    .dynamic-project-card{min-height:330px;display:flex;flex-direction:column;overflow:hidden;position:relative;border:1px solid rgba(118,92,104,.24);border-radius:21px;background:linear-gradient(145deg,rgba(255,253,249,.94),rgba(225,209,199,.68));box-shadow:inset 0 1px 0 rgba(255,255,255,.82),0 14px 34px rgba(71,57,47,.11)}
+    .dynamic-project-image{height:190px;overflow:hidden;background:linear-gradient(135deg,#d8c9bc,#a9988e,#6e635d)}.dynamic-project-image img{width:100%;height:100%;display:block;object-fit:cover}
+    .dynamic-project-body{padding:17px;display:flex;flex:1;flex-direction:column}.dynamic-project-actions{display:flex;gap:8px;margin-top:auto;padding-top:14px}
+    .project-open-btn,.project-edit-btn,.project-delete-btn{flex:1;min-height:38px;border-radius:10px;font:inherit;font-size:10px;font-weight:800;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center}
+    .project-open-btn{background:#403734;color:#f4eae1}.project-edit-btn,.project-delete-btn{background:rgba(255,255,255,.55);color:#5e514b;border:1px solid rgba(89,79,73,.13)}.project-delete-btn:hover{background:#5b4141;color:#fff}
+    .motion-section{opacity:0;transform:translateY(30px);transition:opacity .8s cubic-bezier(.2,.75,.2,1),transform .8s cubic-bezier(.2,.75,.2,1)}
+    .motion-left{opacity:0;transform:translateX(-55px);transition:opacity .85s cubic-bezier(.2,.75,.2,1),transform .85s cubic-bezier(.2,.75,.2,1)}
+    .motion-right{opacity:0;transform:translateX(55px);transition:opacity .85s cubic-bezier(.2,.75,.2,1),transform .85s cubic-bezier(.2,.75,.2,1)}
+    .motion-left.in-view,.motion-right.in-view,.motion-section.in-view{opacity:1;transform:none}
+    .hero-title-word{display:inline-block;opacity:0;transform:translateY(38px);animation:heroWord .8s cubic-bezier(.2,.75,.2,1) forwards}.hero-title-word.delay{animation-delay:.16s}
+    @keyframes heroWord{to{opacity:1;transform:none}}
+    @media(max-width:650px){.project-add-slot,.dynamic-project-card{min-height:330px}.dynamic-project-image{height:185px}}
+    @media(prefers-reduced-motion:reduce){.motion-section,.motion-left,.motion-right,.hero-title-word{opacity:1!important;transform:none!important;animation:none!important;transition:none!important}}
+</style>
+<style>
+.project-card-actions{display:flex;align-items:center;gap:9px;margin-top:14px;width:100%}
+.project-github-btn,.project-details-btn{height:40px;border-radius:11px;border:1px solid rgba(89,79,73,.14);display:inline-flex;align-items:center;justify-content:center;text-decoration:none;font:inherit;font-size:10px;font-weight:800;cursor:pointer;transition:transform .22s ease,background .22s ease,color .22s ease,box-shadow .22s ease}
+.project-github-btn{width:42px;flex:0 0 42px;background:#403734;color:#f4eae1}
+.project-github-btn svg{width:19px;height:19px;display:block}
+.project-details-btn{flex:1;background:rgba(255,255,255,.58);color:#5e514b}
+.project-github-btn:hover{transform:translateY(-2px);background:#211d1b;box-shadow:0 10px 22px rgba(71,57,47,.14)}
+.project-details-btn:hover{transform:translateY(-2px);background:#403734;color:#f4eae1;box-shadow:0 10px 22px rgba(71,57,47,.12)}
+.project-details-content{padding:18px 19px;border:1px solid rgba(118,92,104,.16);border-radius:16px;background:rgba(255,253,249,.48);box-shadow:inset 0 1px 0 rgba(255,255,255,.72)}
+.project-details-actions{justify-content:flex-end}
+.project-details-dialog{max-width:720px}
+@media(max-width:650px){.project-card-actions{gap:8px}.project-details-dialog{width:calc(100% - 24px)}}
+</style>
+</head>
+<body class="m-0 min-h-screen overflow-x-hidden text-ink font-sans selection:text-ivory selection:bg-ink bg-[radial-gradient(circle_at_8%_12%,rgba(194,171,151,.48),transparent_25%),radial-gradient(circle_at_90%_25%,rgba(182,151,156,.38),transparent_28%),radial-gradient(circle_at_50%_100%,rgba(194,171,151,.30),transparent_28%),linear-gradient(135deg,#e9dfd4_0%,#e9dfd4_50%,#cdbbae_100%)]">
+<!-- faint grid-line texture, fading toward the bottom -->
+<div aria-hidden="true" class="fixed inset-0 -z-[3] pointer-events-none opacity-25 bg-[linear-gradient(rgba(255,255,255,.48)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.48)_1px,transparent_1px)] bg-[length:44px_44px] [mask-image:linear-gradient(to_bottom,black,transparent_70%)]"></div>
+<div aria-hidden="true" class="fixed -z-[2] pointer-events-none rounded-full blur-[80px] w-[330px] h-[330px] top-[10%] left-[-150px] bg-[rgba(165,142,145,.18)]"></div>
+<div aria-hidden="true" class="fixed -z-[2] pointer-events-none rounded-full blur-[80px] w-[400px] h-[400px] right-[-190px] top-[45%] bg-[rgba(216,199,183,.23)]"></div>
+<div aria-hidden="true" class="fixed -z-[2] pointer-events-none rounded-full blur-[80px] w-[260px] h-[260px] left-[43%] bottom-[-140px] bg-[rgba(200,175,177,.19)]"></div>
+<!-- =========================================================
+       NAVIGATION
+       ========================================================= -->
+<header class="sticky top-0 z-[100] py-[18px]">
+<nav aria-label="Main Navigation" class="min-h-[68px] flex items-center justify-between gap-7 px-[22px] border border-[rgba(255,255,255,.72)] rounded-full bg-[rgba(226,214,203,.42)] shadow-[0_12px_38px_rgba(73,58,47,.08)] backdrop-blur-[24px] w-[min(1180px,calc(100%-40px))] mx-auto">
+<a class="inline-flex items-center gap-[11px] shrink-0 font-extrabold tracking-[-0.04em]" href="#home">
+<span class="w-[39px] h-[39px] grid place-items-center rounded-full text-ivory bg-ink text-[11px]">IA</span>
+<span class="text-[16px]">Israt<span class="text-mauve">Abida</span></span>
+</a>
+<div class="flex items-center gap-5 max-920:hidden">
+<a class="relative text-ink text-[12px] font-bold whitespace-nowrap max-1120:text-[11px] after:content-[''] after:absolute after:left-0 after:right-0 after:-bottom-2 after:h-px after:bg-ink" href="#home">Home</a>
+<a class="relative text-soft-ink text-[12px] font-bold whitespace-nowrap max-1120:text-[11px] transition-colors duration-[250ms] after:content-[''] after:absolute after:left-0 after:right-full after:-bottom-2 after:h-px after:bg-ink after:transition-[right] after:duration-[250ms] hover:text-ink hover:after:right-0" href="#about">About</a>
+<a class="relative text-soft-ink text-[12px] font-bold whitespace-nowrap max-1120:text-[11px] transition-colors duration-[250ms] after:content-[''] after:absolute after:left-0 after:right-full after:-bottom-2 after:h-px after:bg-ink after:transition-[right] after:duration-[250ms] hover:text-ink hover:after:right-0" href="#showcases">Portfolio Showcase</a>
+<a class="relative text-soft-ink text-[12px] font-bold whitespace-nowrap max-1120:text-[11px] transition-colors duration-[250ms] after:content-[''] after:absolute after:left-0 after:right-full after:-bottom-2 after:h-px after:bg-ink after:transition-[right] after:duration-[250ms] hover:text-ink hover:after:right-0" href="#contact">Contact</a>
+</div>
+<a class="max-920:hidden px-[17px] py-[11px] border border-ink/10 rounded-full bg-white/40 text-[12px] font-extrabold transition-all duration-[250ms] hover:text-ivory hover:bg-ink hover:-translate-y-[2px]" href="mailto:abidaisratjahan64@gmail.com?subject=Portfolio%20Contact">
+        Let's Talk <span>↗</span>
+</a>
+<details class="relative hidden max-920:block">
+<summary class="w-[42px] h-[42px] grid place-items-center border border-ink/10 rounded-full cursor-pointer list-none text-[18px] [&amp;::-webkit-details-marker]:hidden">☰</summary>
+<div class="absolute top-[54px] right-0 w-[200px] p-[10px] rounded-[20px] bg-[linear-gradient(135deg,rgba(255,250,244,.34),rgba(220,205,191,.16))] border border-[rgba(255,255,255,.72)] shadow-[inset_0_1px_0_rgba(255,255,255,.72),inset_0_-1px_0_rgba(112,91,76,.05),0_24px_70px_rgba(71,57,47,.12)] backdrop-blur-[22px]">
+<a class="block p-3 rounded-xl text-[13px] font-bold hover:bg-white/55" href="#home">Home</a>
+<a class="block p-3 rounded-xl text-[13px] font-bold hover:bg-white/55" href="#about">About</a>
+<a class="block p-3 rounded-xl text-[13px] font-bold hover:bg-white/55" href="#showcases">Portfolio Showcase</a>
+<a class="block p-3 rounded-xl text-[13px] font-bold hover:bg-white/55" href="#contact">Contact</a>
+</div>
+</details>
+</nav>
+</header>
+<main>
+<!-- =========================================================
+         HOME
+         ========================================================= -->
+<section class="min-h-[calc(100vh-104px)] max-650:min-h-0 flex items-center justify-center py-[85px] pb-[95px] max-650:py-[70px] max-650:pb-[85px] text-center" id="home">
+<div class="flex flex-col items-center justify-center w-[min(1180px,calc(100%-40px))] max-650:w-[min(calc(100%-26px),1180px)] mx-auto">
+<p class="mb-[22px] text-mauve text-[10px] font-extrabold tracking-[.18em] uppercase">
+          WELCOME TO MY PORTFOLIO
+        </p>
+<h1 class="max-w-[1000px] m-0 font-display text-[clamp(54px,8vw,100px)] max-650:text-[clamp(45px,13vw,70px)] font-semibold leading-[.92] tracking-[-.06em]">
+          Hello, I'm
+          <span class="block mt-[13px] text-mauve">
+            Israt Jahan Abida.
+          </span>
+</h1>
+<p class="w-[min(720px,100%)] mt-[34px] mx-auto text-soft-ink text-[15px] max-650:text-[13px] leading-[1.9]">
+          I'm an undergraduate CSE student interested in frontend development,
+          AI research, machine learning, and innovative digital experiences.
+          I enjoy learning modern technologies and turning ideas into clean,
+          useful, and user-friendly digital solutions.
+        </p>
+<!-- Hero actions: More About Me stays centered under the intro; Resume + Contact sit below it. -->
+<div class="hero-actions">
+<a class="hero-action-btn more-about min-h-[52px] inline-flex items-center justify-center gap-[9px] px-7 border border-white/72 rounded-full text-soft-ink bg-[linear-gradient(135deg,rgba(255,255,255,.54),rgba(208,190,183,.28))] shadow-[0_12px_32px_rgba(71,57,47,.09)] text-[12px] font-extrabold transition-all duration-[250ms] hover:-translate-y-[3px] hover:bg-white/68 hover:shadow-[0_17px_35px_rgba(71,57,47,.13)]" href="#about">
+            More About Me <span class="text-mauve text-[15px]">↗</span>
+</a>
+<div class="hero-actions-secondary">
+<a class="hero-action-btn resume min-h-[52px] inline-flex items-center justify-center px-7 border border-ink/10 rounded-full text-ink bg-white/45 shadow-[0_12px_32px_rgba(71,57,47,.07)] text-[12px] font-extrabold transition-all duration-[250ms] hover:text-ivory hover:bg-ink hover:-translate-y-[3px]" href="Israt_Jahan_Abida_Resume.pdf" rel="noopener" target="_blank">
+              Resume
+            </a>
+<a class="hero-action-btn contact min-h-[52px] inline-flex items-center justify-center gap-[9px] px-7 border border-white/78 rounded-full text-ivory bg-ink shadow-[0_12px_32px_rgba(71,57,47,.18)] text-[12px] font-extrabold transition-all duration-[250ms] hover:-translate-y-[3px] hover:bg-[#413936] hover:shadow-[0_17px_35px_rgba(71,57,47,.22)]" href="#contact">
+              Contact <span class="text-[#d8bec0] text-[15px]">↗</span>
+</a>
+</div>
+</div>
+</div>
+</section>
+<!-- =========================================================
+         ABOUT ME
+         ========================================================= -->
+<section class="py-[120px] pb-[110px] max-650:py-[80px] max-650:pb-[80px] w-[min(1180px,calc(100%-40px))] max-650:w-[min(calc(100%-26px),1180px)] mx-auto" id="about">
+<div class="text-center mb-[70px] max-650:mb-[50px]">
+<h2 class="m-0 text-[clamp(48px,6vw,72px)] max-650:text-[clamp(46px,14vw,65px)] font-extrabold leading-none tracking-[-.05em]">
+          About <span class="text-mauve">Me</span>
+</h2>
+</div>
+<div class="grid grid-cols-[420px_1fr] max-1080:grid-cols-[360px_1fr] max-1080:gap-[45px] max-920:grid-cols-1 max-920:gap-[45px] items-center gap-[70px]">
+<div class="relative flex justify-center">
+<div aria-hidden="true" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[290px] h-[290px] max-920:w-[250px] max-920:h-[250px] rounded-full blur-[30px] bg-[rgba(255,255,255,.65)]"></div>
+<div aria-hidden="true" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[410px] h-[410px] max-920:w-[345px] max-920:h-[345px] rounded-full blur-[65px] bg-[rgba(165,142,145,.55)]"></div>
+<div aria-hidden="true" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[480px] h-[480px] max-920:w-[405px] max-920:h-[405px] rounded-full blur-[90px] bg-[rgba(216,199,183,.45)]"></div>
+<div class="relative w-full max-w-[380px] max-920:max-w-[320px] aspect-square overflow-hidden rounded-full border-[7px] border-[rgba(52,43,38,.38)] bg-[#d7c8bb] shadow-[0_35px_85px_rgba(63,49,39,.38),0_0_0_1px_rgba(255,255,255,.35)]">
+<img alt="Israt Jahan Abida" class="w-full h-full block object-cover object-center [filter:saturate(.92)_contrast(.99)]" src="profile.jpg"/>
+</div>
+</div>
+<div class="self-center">
+<div>
+<h3 class="m-0 mb-[22px] font-display text-[clamp(38px,4vw,50px)] leading-none tracking-[-.045em]">
+              Who Am I
+            </h3>
+<p class="max-w-[710px] m-0 mb-[10px] text-soft-ink text-[14px] max-650:text-[13px] leading-[1.78]">
+              I am a CSE undergraduate student at International Islamic University
+              Chittagong (IIUC) and an aspiring software engineer.
+            </p>
+<p class="max-w-[710px] m-0 mb-[10px] text-soft-ink text-[14px] max-650:text-[13px] leading-[1.78]">
+              I am interested in frontend development, AI research, machine learning,
+              and innovative digital experiences. Currently, I am learning more about
+              modern web technologies, data structures, and practical problem-solving
+              while continuously building my development skills.
+            </p>
+<p class="max-w-[710px] m-0 mb-[10px] text-soft-ink text-[14px] max-650:text-[13px] leading-[1.78]">
+              I completed my SSC from Sitakunda Govt. Model High School in 2018, and
+              my HSC from Sitakunda Govt. Mohila College in 2020. I am currently
+              continuing my undergraduate studies in Computer Science and Engineering at IIUC.
+            </p>
+</div>
+</div>
+</div>
+</section>
+<!-- =========================================================
+         PORTFOLIO SHOWCASES
+         ========================================================= -->
+<section class="py-[120px] max-650:py-[80px] max-650:pb-[90px] w-[min(1180px,calc(100%-40px))] max-650:w-[min(calc(100%-26px),1180px)] mx-auto" id="showcases">
+<div class="text-center mb-[55px]">
+<p class="mb-[18px] text-mauve text-[10px] font-extrabold tracking-[.17em] uppercase">
+          MY WORK
+        </p>
+<h2 class="m-0 text-[clamp(48px,6vw,72px)] max-650:text-[clamp(45px,13vw,64px)] font-extrabold leading-none tracking-[-.05em]">
+          Portfolio <span class="text-mauve">Showcases</span>
+</h2>
+<p class="mt-[18px] mx-auto text-soft-ink text-[15px]">
+          Explore my skills, projects, and experiences.
+        </p>
+</div>
+<!-- ==================== THREE BOXES ==================== -->
+<div class="grid grid-cols-3 max-920:grid-cols-1 gap-[18px] scroll-mt-[110px]">
+<a class="min-h-[190px] max-920:min-h-[150px] relative flex flex-col justify-center p-7 overflow-hidden border border-white/72 rounded-[24px] bg-[linear-gradient(135deg,rgba(255,253,249,.65),rgba(255,248,240,.31))] shadow-[inset_0_1px_0_rgba(255,255,255,.72),0_24px_70px_rgba(71,57,47,.12)] backdrop-blur-[22px] transition-all duration-[280ms] hover:-translate-y-2 hover:bg-[rgba(255,252,247,.70)] hover:shadow-[0_27px_72px_rgba(71,57,47,.15)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-mauve focus-visible:outline-offset-4" href="#showcase-skills">
+<span class="absolute top-5 right-[22px] text-mauve text-[10px] font-extrabold tracking-[.1em]">01</span>
+<span class="w-[52px] h-[52px] grid place-items-center mb-[25px] rounded-2xl text-ivory bg-ink text-[17px] font-extrabold">&lt;/&gt;</span>
+<span class="font-display text-[29px] tracking-[-.035em]">My Skills</span>
+<span class="absolute left-7 bottom-[21px] text-muted text-[17px]">↗</span>
+</a>
+<a class="min-h-[190px] max-920:min-h-[150px] relative flex flex-col justify-center p-7 overflow-hidden border border-white/72 rounded-[24px] bg-[linear-gradient(135deg,rgba(255,253,249,.65),rgba(255,248,240,.31))] shadow-[inset_0_1px_0_rgba(255,255,255,.72),0_24px_70px_rgba(71,57,47,.12)] backdrop-blur-[22px] transition-all duration-[280ms] hover:-translate-y-2 hover:bg-[rgba(255,252,247,.70)] hover:shadow-[0_27px_72px_rgba(71,57,47,.15)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-mauve focus-visible:outline-offset-4" href="#showcase-projects">
+<span class="absolute top-5 right-[22px] text-mauve text-[10px] font-extrabold tracking-[.1em]">02</span>
+<span class="w-[52px] h-[52px] grid place-items-center mb-[25px] rounded-2xl text-ivory bg-ink text-[17px] font-extrabold">◈</span>
+<span class="font-display text-[29px] tracking-[-.035em]">Projects</span>
+<span class="absolute left-7 bottom-[21px] text-muted text-[17px]">↗</span>
+</a>
+<a class="min-h-[190px] max-920:min-h-[150px] relative flex flex-col justify-center p-7 overflow-hidden border border-white/72 rounded-[24px] bg-[linear-gradient(135deg,rgba(255,253,249,.65),rgba(255,248,240,.31))] shadow-[inset_0_1px_0_rgba(255,255,255,.72),0_24px_70px_rgba(71,57,47,.12)] backdrop-blur-[22px] transition-all duration-[280ms] hover:-translate-y-2 hover:bg-[rgba(255,252,247,.70)] hover:shadow-[0_27px_72px_rgba(71,57,47,.15)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-mauve focus-visible:outline-offset-4" href="#showcase-experiences">
+<span class="absolute top-5 right-[22px] text-mauve text-[10px] font-extrabold tracking-[.1em]">03</span>
+<span class="w-[52px] h-[52px] grid place-items-center mb-[25px] rounded-2xl text-ivory bg-ink text-[17px] font-extrabold">✦</span>
+<span class="font-display text-[29px] tracking-[-.035em]">Work Experience</span>
+<span class="absolute left-7 bottom-[21px] text-muted text-[17px]">↗</span>
+</a>
+<a class="min-h-[190px] max-920:min-h-[150px] relative flex flex-col justify-center p-7 overflow-hidden border border-white/72 rounded-[24px] bg-[linear-gradient(135deg,rgba(255,253,249,.65),rgba(255,248,240,.31))] shadow-[inset_0_1px_0_rgba(255,255,255,.72),0_24px_70px_rgba(71,57,47,.12)] backdrop-blur-[22px] transition-all duration-[280ms] hover:-translate-y-2 hover:bg-[rgba(255,252,247,.70)] hover:shadow-[0_27px_72px_rgba(71,57,47,.15)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-mauve focus-visible:outline-offset-4" href="#showcase-certificates">
+<span class="absolute top-5 right-[22px] text-mauve text-[10px] font-extrabold tracking-[.1em]">04</span>
+<span class="w-[52px] h-[52px] grid place-items-center mb-[25px] rounded-2xl text-ivory bg-ink text-[17px] font-extrabold">🏅</span>
+<span class="font-display text-[29px] tracking-[-.035em]">Certificates</span>
+<span class="absolute left-7 bottom-[21px] text-muted text-[17px]">↗</span>
+</a>
+<a class="min-h-[190px] max-920:min-h-[150px] relative flex flex-col justify-center p-7 overflow-hidden border border-white/72 rounded-[24px] bg-[linear-gradient(135deg,rgba(255,253,249,.65),rgba(255,248,240,.31))] shadow-[inset_0_1px_0_rgba(255,255,255,.72),0_24px_70px_rgba(71,57,47,.12)] backdrop-blur-[22px] transition-all duration-[280ms] hover:-translate-y-2 hover:bg-[rgba(255,252,247,.70)] hover:shadow-[0_27px_72px_rgba(71,57,47,.15)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-mauve focus-visible:outline-offset-4" href="#showcase-papers">
+<span class="absolute top-5 right-[22px] text-mauve text-[10px] font-extrabold tracking-[.1em]">05</span>
+<span class="w-[52px] h-[52px] grid place-items-center mb-[25px] rounded-2xl text-ivory bg-ink text-[17px] font-extrabold">📄</span>
+<span class="font-display text-[29px] tracking-[-.035em]">Published Papers</span>
+<span class="absolute left-7 bottom-[21px] text-muted text-[17px]">↗</span>
+</a>
+</div>
+<!-- ==================== PANEL CONTAINER ==================== -->
+<div class="relative mt-[22px]">
+<!-- ==================== MY SKILLS ==================== -->
+<div class="showcase-panel scroll-mt-[120px] p-9 max-650:p-[25px_18px] rounded-[28px] bg-[linear-gradient(135deg,rgba(255,250,244,.34),rgba(220,205,191,.16))] border border-white/72 shadow-[inset_0_1px_0_rgba(255,255,255,.72),inset_0_-1px_0_rgba(112,91,76,.05),0_24px_70px_rgba(71,57,47,.12)] backdrop-blur-[22px]" id="showcase-skills">
+<div class="experience-heading flex items-end justify-between max-650:items-start max-650:flex-col gap-[25px] mb-8">
+<div>
+<p class="m-0 mb-[7px] text-mauve text-[9px] font-extrabold tracking-[.14em] uppercase">01 — SHOWCASE</p>
+<h3 class="m-0 font-display text-[clamp(34px,4vw,50px)] leading-none tracking-[-.045em]">My <span class="text-mauve">Skills</span></h3>
+<small class="block mt-[10px] text-soft-ink text-[11px] leading-[1.7]">Core technologies and tools I am currently learning and using.</small>
+</div>
+<a class="px-[13px] py-[9px] border border-ink/10 rounded-full text-soft-ink bg-white/30 text-[9px] font-extrabold whitespace-nowrap transition-all duration-[250ms] hover:text-ivory hover:bg-ink" href="#showcases">Back to Showcases ↑</a>
+</div>
+<div class="grid grid-cols-3 max-1080:grid-cols-2 max-650:grid-cols-1 gap-4 max-650:gap-[14px]">
+<div class="p-5 border border-ink/10 rounded-[18px] bg-[rgba(235,224,213,.22)] transition-all duration-[250ms] hover:-translate-y-[5px] hover:bg-[rgba(245,236,227,.36)] hover:shadow-[0_18px_36px_rgba(71,57,47,.10)]">
+<div class="flex items-center gap-3">
+<span class="w-[42px] h-[42px] flex-none grid place-items-center rounded-[11px] text-[#272321] bg-[#eadf9d] border border-white/72 shadow-[inset_0_1px_0_rgba(255,255,255,.72)] text-[11px] font-black tracking-[-.03em]">JS</span>
+<span class="text-ink text-[15px] font-extrabold">JavaScript</span>
+</div>
+<p class="m-0 mt-4 mb-2 text-muted text-[9px] font-extrabold tracking-[.1em] uppercase">Proficiency</p>
+<div class="flex items-center gap-3">
+<div class="flex-1 h-[6px] rounded-full bg-ink/10 overflow-hidden">
+<div class="skill-bar h-full rounded-full bg-[#9b7886]" style="width:80%"></div>
+</div>
+<span class="skill-percent text-[#765c68] text-[11px] font-black">80%</span>
+</div>
+</div>
+<div class="p-5 border border-ink/10 rounded-[18px] bg-[rgba(235,224,213,.22)] transition-all duration-[250ms] hover:-translate-y-[5px] hover:bg-[rgba(245,236,227,.36)] hover:shadow-[0_18px_36px_rgba(71,57,47,.10)]">
+<div class="flex items-center gap-3">
+<span class="w-[42px] h-[42px] flex-none grid place-items-center rounded-[11px] text-[#272321] bg-[#b8d6c5] border border-white/72 shadow-[inset_0_1px_0_rgba(255,255,255,.72)] text-[11px] font-black tracking-[-.03em]">Py</span>
+<span class="text-ink text-[15px] font-extrabold">Python</span>
+</div>
+<p class="m-0 mt-4 mb-2 text-muted text-[9px] font-extrabold tracking-[.1em] uppercase">Proficiency</p>
+<div class="flex items-center gap-3">
+<div class="flex-1 h-[6px] rounded-full bg-ink/10 overflow-hidden">
+<div class="skill-bar h-full rounded-full bg-[#9b7886]" style="width:75%"></div>
+</div>
+<span class="skill-percent text-[#765c68] text-[11px] font-black">75%</span>
+</div>
+</div>
+<div class="p-5 border border-ink/10 rounded-[18px] bg-[rgba(235,224,213,.22)] transition-all duration-[250ms] hover:-translate-y-[5px] hover:bg-[rgba(245,236,227,.36)] hover:shadow-[0_18px_36px_rgba(71,57,47,.10)]">
+<div class="flex items-center gap-3">
+<span class="w-[42px] h-[42px] flex-none grid place-items-center rounded-[11px] text-[#272321] bg-[#b9c9df] border border-white/72 shadow-[inset_0_1px_0_rgba(255,255,255,.72)] text-[11px] font-black tracking-[-.03em]">C++</span>
+<span class="text-ink text-[15px] font-extrabold">C++</span>
+</div>
+<p class="m-0 mt-4 mb-2 text-muted text-[9px] font-extrabold tracking-[.1em] uppercase">Proficiency</p>
+<div class="flex items-center gap-3">
+<div class="flex-1 h-[6px] rounded-full bg-ink/10 overflow-hidden">
+<div class="skill-bar h-full rounded-full bg-[#9b7886]" style="width:87%"></div>
+</div>
+<span class="skill-percent text-[#765c68] text-[11px] font-black">87%</span>
+</div>
+</div>
+<div class="p-5 border border-ink/10 rounded-[18px] bg-[rgba(235,224,213,.22)] transition-all duration-[250ms] hover:-translate-y-[5px] hover:bg-[rgba(245,236,227,.36)] hover:shadow-[0_18px_36px_rgba(71,57,47,.10)]">
+<div class="flex items-center gap-3">
+<span aria-hidden="true" class="w-[42px] h-[42px] flex-none grid place-items-center rounded-[11px] text-[#c94d2f] bg-[#f0c0a8] border border-white/72 shadow-[inset_0_1px_0_rgba(255,255,255,.72)]">
+<svg class="w-[25px] h-[25px] block fill-current" role="img" viewbox="0 0 24 24">
+<path d="M3 2.5h18L19.35 19 12 21.5 4.65 19 3 2.5Z"></path><path d="M7.2 7.1h9.6M7.7 11.2h8.6M8.2 15.3h7.6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.45"></path>
+</svg>
+</span>
+<span class="text-ink text-[15px] font-extrabold">HTML</span>
+</div>
+<p class="m-0 mt-4 mb-2 text-muted text-[9px] font-extrabold tracking-[.1em] uppercase">Proficiency</p>
+<div class="flex items-center gap-3">
+<div class="flex-1 h-[6px] rounded-full bg-ink/10 overflow-hidden">
+<div class="skill-bar h-full rounded-full bg-[#9b7886]" style="width:90%"></div>
+</div>
+<span class="skill-percent text-[#765c68] text-[11px] font-black">90%</span>
+</div>
+</div>
+<div class="p-5 border border-ink/10 rounded-[18px] bg-[rgba(235,224,213,.22)] transition-all duration-[250ms] hover:-translate-y-[5px] hover:bg-[rgba(245,236,227,.36)] hover:shadow-[0_18px_36px_rgba(71,57,47,.10)]">
+<div class="flex items-center gap-3">
+<span aria-hidden="true" class="w-[42px] h-[42px] flex-none grid place-items-center rounded-[11px] text-[#2f74a8] bg-[#b8d6e4] border border-white/72 shadow-[inset_0_1px_0_rgba(255,255,255,.72)]">
+<svg class="w-[25px] h-[25px] block fill-current" role="img" viewbox="0 0 24 24">
+<path d="M3 2.5h18L19.35 19 12 21.5 4.65 19 3 2.5Z"></path><path d="M7.2 7.1h9.6M7.7 11.2h8.6M8.2 15.3h7.6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.45"></path>
+</svg>
+</span>
+<span class="text-ink text-[15px] font-extrabold">CSS</span>
+</div>
+<p class="m-0 mt-4 mb-2 text-muted text-[9px] font-extrabold tracking-[.1em] uppercase">Proficiency</p>
+<div class="flex items-center gap-3">
+<div class="flex-1 h-[6px] rounded-full bg-ink/10 overflow-hidden">
+<div class="skill-bar h-full rounded-full bg-[#9b7886]" style="width:85%"></div>
+</div>
+<span class="skill-percent text-[#765c68] text-[11px] font-black">85%</span>
+</div>
+</div>
+</div>
+</div>
+<!-- ==================== PROJECTS ==================== -->
+<div class="showcase-panel scroll-mt-[120px] p-9 max-650:p-[25px_18px] rounded-[28px] bg-[linear-gradient(135deg,rgba(255,250,244,.34),rgba(220,205,191,.16))] border border-white/72 shadow-[inset_0_1px_0_rgba(255,255,255,.72),inset_0_-1px_0_rgba(112,91,76,.05),0_24px_70px_rgba(71,57,47,.12)] backdrop-blur-[22px]" id="showcase-projects">
+<div class="flex items-end justify-between max-650:items-start max-650:flex-col gap-[25px] mb-8">
+<div>
+<p class="m-0 mb-[7px] text-mauve text-[9px] font-extrabold tracking-[.14em] uppercase">02 — SHOWCASE</p>
+<h3 class="m-0 font-display text-[clamp(34px,4vw,50px)] leading-none tracking-[-.045em]">My <span class="text-mauve">Projects</span></h3>
+<small class="block mt-[10px] text-soft-ink text-[11px] leading-[1.7]">Selected work and ideas built through my learning journey.</small>
+</div>
+<a class="px-[13px] py-[9px] border border-ink/10 rounded-full text-soft-ink bg-white/30 text-[9px] font-extrabold whitespace-nowrap transition-all duration-[250ms] hover:text-ivory hover:bg-ink" href="#showcases">Back to Showcases ↑</a>
+</div>
+<div class="grid grid-cols-3 max-920:grid-cols-2 max-650:grid-cols-1 gap-[17px]">
+<article class="overflow-hidden border border-ink/10 rounded-[21px] bg-white/24 transition-all duration-[280ms] hover:-translate-y-[6px] hover:bg-white/40">
+<div class="min-h-[240px] relative p-[19px] overflow-hidden bg-[radial-gradient(circle_at_70%_23%,rgba(255,255,255,.72),transparent_21%),linear-gradient(135deg,#d8c9bc,#a9988e_50%,#6e635d)] before:content-[''] before:absolute before:w-[180px] before:h-[180px] before:right-[-60px] before:bottom-[-75px] before:rounded-full before:border before:border-white/55 before:bg-white/14">
+<span class="relative z-[2] text-[rgba(35,31,29,.72)] text-[9px] font-extrabold tracking-[.12em] uppercase">01 / FRONTEND</span>
+<strong class="absolute right-[25px] bottom-3 text-white/75 font-display text-[55px] font-normal">✦</strong>
+</div>
+<div class="flex items-center justify-between gap-[15px] p-[17px]">
+<div>
+<h4 class="m-0 text-[14px] font-extrabold">Portfolio Website</h4>
+<p class="max-w-[290px] mt-[6px] mb-0 text-soft-ink text-[10px] leading-[1.7]">Responsive personal portfolio built with HTML and Tailwind CSS.</p>
+</div>
+<div class="project-card-actions"><a aria-label="Open GitHub" class="project-github-btn" href="https://github.com/isratjahanabida" rel="noopener" target="_blank" title="Open GitHub"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .7a11.3 11.3 0 0 0-3.57 22.02c.56.1.77-.24.77-.54v-2.13c-3.13.68-3.79-1.33-3.79-1.33-.51-1.3-1.25-1.65-1.25-1.65-1.02-.7.08-.69.08-.69 1.13.08 1.72 1.16 1.72 1.16 1 .1.85 1.78 3.78 1.27.09-.71.39-1.2.71-1.48-2.5-.29-5.13-1.25-5.13-5.56 0-1.23.44-2.24 1.16-3.03-.12-.29-.5-1.44.11-3 0 0 .95-.31 3.11 1.16A10.8 10.8 0 0 1 12 7.2c.96 0 1.92.13 2.82.39 2.16-1.47 3.11-1.16 3.11-1.16.61 1.56.23 2.71.11 3 .72.79 1.16 1.8 1.16 3.03 0 4.32-2.64 5.27-5.15 5.55.4.35.75 1.04.75 2.1v3.12c0 .3.2.65.78.54A11.3 11.3 0 0 0 12 .7Z"/></svg></a><button type="button" class="project-details-btn" data-project-details data-project-title="Portfolio Website" data-project-description="Responsive personal portfolio built with HTML and Tailwind CSS. This portfolio presents my skills, projects, publications, work experience, certificates, and contact information in an interactive and responsive layout.">Details</button></div>
+</div>
+</article>
+<article class="overflow-hidden border border-ink/10 rounded-[21px] bg-white/24 transition-all duration-[280ms] hover:-translate-y-[6px] hover:bg-white/40">
+<div class="min-h-[240px] relative p-[19px] overflow-hidden bg-[linear-gradient(135deg,rgba(255,255,255,.46),transparent_45%),linear-gradient(140deg,#e1d8ce,#b7a6a2_60%,#8e7779)] before:content-[''] before:absolute before:w-[180px] before:h-[180px] before:right-[-60px] before:bottom-[-75px] before:rounded-full before:border before:border-white/55 before:bg-white/14">
+<span class="relative z-[2] text-[rgba(35,31,29,.72)] text-[9px] font-extrabold tracking-[.12em] uppercase">02 / UI DESIGN</span>
+<strong class="absolute right-[25px] bottom-3 text-white/75 font-display text-[55px] font-normal">◌</strong>
+</div>
+<div class="flex items-center justify-between gap-[15px] p-[17px]">
+<div>
+<h4 class="m-0 text-[14px] font-extrabold">Dashboard Concept</h4>
+<p class="max-w-[290px] mt-[6px] mb-0 text-soft-ink text-[10px] leading-[1.7]">A clean interface concept for presenting structured information.</p>
+</div>
+<div class="project-card-actions"><a aria-label="Open GitHub" class="project-github-btn" href="https://github.com/isratjahanabida" rel="noopener" target="_blank" title="Open GitHub"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .7a11.3 11.3 0 0 0-3.57 22.02c.56.1.77-.24.77-.54v-2.13c-3.13.68-3.79-1.33-3.79-1.33-.51-1.3-1.25-1.65-1.25-1.65-1.02-.7.08-.69.08-.69 1.13.08 1.72 1.16 1.72 1.16 1 .1.85 1.78 3.78 1.27.09-.71.39-1.2.71-1.48-2.5-.29-5.13-1.25-5.13-5.56 0-1.23.44-2.24 1.16-3.03-.12-.29-.5-1.44.11-3 0 0 .95-.31 3.11 1.16A10.8 10.8 0 0 1 12 7.2c.96 0 1.92.13 2.82.39 2.16-1.47 3.11-1.16 3.11-1.16.61 1.56.23 2.71.11 3 .72.79 1.16 1.8 1.16 3.03 0 4.32-2.64 5.27-5.15 5.55.4.35.75 1.04.75 2.1v3.12c0 .3.2.65.78.54A11.3 11.3 0 0 0 12 .7Z"/></svg></a><button type="button" class="project-details-btn" data-project-details data-project-title="Dashboard Concept" data-project-description="A clean interface concept for presenting structured information. The project focuses on a simple visual hierarchy, organized content blocks, and a user-friendly dashboard experience.">Details</button></div>
+</div>
+</article>
+<article class="overflow-hidden border border-ink/10 rounded-[21px] bg-white/24 transition-all duration-[280ms] hover:-translate-y-[6px] hover:bg-white/40">
+<div class="min-h-[240px] relative p-[19px] overflow-hidden bg-[radial-gradient(circle_at_22%_75%,rgba(255,255,255,.55),transparent_22%),linear-gradient(140deg,#ece5db,#c3b2a9_58%,#9d8987)] before:content-[''] before:absolute before:w-[180px] before:h-[180px] before:right-[-60px] before:bottom-[-75px] before:rounded-full before:border before:border-white/55 before:bg-white/14">
+<span class="relative z-[2] text-[rgba(35,31,29,.72)] text-[9px] font-extrabold tracking-[.12em] uppercase">03 / AI &amp; ML</span>
+<strong class="absolute right-[25px] bottom-3 text-white/75 font-display text-[55px] font-normal">⌁</strong>
+</div>
+<div class="flex items-center justify-between gap-[15px] p-[17px]">
+<div>
+<h4 class="m-0 text-[14px] font-extrabold">Machine Learning Study</h4>
+<p class="max-w-[290px] mt-[6px] mb-0 text-soft-ink text-[10px] leading-[1.7]">A space for future ML experiments, research, and practical work.</p>
+</div>
+<div class="project-card-actions"><a aria-label="Open GitHub" class="project-github-btn" href="https://github.com/isratjahanabida" rel="noopener" target="_blank" title="Open GitHub"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .7a11.3 11.3 0 0 0-3.57 22.02c.56.1.77-.24.77-.54v-2.13c-3.13.68-3.79-1.33-3.79-1.33-.51-1.3-1.25-1.65-1.25-1.65-1.02-.7.08-.69.08-.69 1.13.08 1.72 1.16 1.72 1.16 1 .1.85 1.78 3.78 1.27.09-.71.39-1.2.71-1.48-2.5-.29-5.13-1.25-5.13-5.56 0-1.23.44-2.24 1.16-3.03-.12-.29-.5-1.44.11-3 0 0 .95-.31 3.11 1.16A10.8 10.8 0 0 1 12 7.2c.96 0 1.92.13 2.82.39 2.16-1.47 3.11-1.16 3.11-1.16.61 1.56.23 2.71.11 3 .72.79 1.16 1.8 1.16 3.03 0 4.32-2.64 5.27-5.15 5.55.4.35.75 1.04.75 2.1v3.12c0 .3.2.65.78.54A11.3 11.3 0 0 0 12 .7Z"/></svg></a><button type="button" class="project-details-btn" data-project-details data-project-title="Machine Learning Study" data-project-description="A space for future ML experiments, research, and practical work. The project is intended for exploring machine learning workflows, experimenting with models, and documenting practical learning outcomes.">Details</button></div>
+</div>
+</article>
+
+</div>
+</div>
+<!-- ==================== WORK EXPERIENCE ==================== -->
+<div class="showcase-panel scroll-mt-[120px] p-9 max-650:p-[25px_18px] rounded-[28px] bg-[linear-gradient(135deg,rgba(255,250,244,.34),rgba(220,205,191,.16))] border border-white/72 shadow-[inset_0_1px_0_rgba(255,255,255,.72),inset_0_-1px_0_rgba(112,91,76,.05),0_24px_70px_rgba(71,57,47,.12)] backdrop-blur-[22px]" id="showcase-experiences">
+<div class="flex items-end justify-between max-650:items-start max-650:flex-col gap-[25px] mb-8">
+<div>
+<p class="m-0 mb-[7px] text-mauve text-[9px] font-extrabold tracking-[.14em] uppercase">03 — SHOWCASE</p>
+<h3 class="m-0 font-display text-[clamp(34px,4vw,50px)] leading-none tracking-[-.045em]">Work <span class="text-mauve">Experience</span></h3>
+<small class="block mt-[10px] text-soft-ink text-[11px] leading-[1.7]">My professional experience.</small>
+</div>
+<a class="px-[13px] py-[9px] border border-ink/10 rounded-full text-soft-ink bg-white/30 text-[9px] font-extrabold whitespace-nowrap transition-all duration-[250ms] hover:text-ivory hover:bg-ink" href="#showcases">Back to Showcases ↑</a>
+</div>
+<!-- ==================== WORK EXPERIENCE ==================== -->
+<div>
+<article class="experience-card p-[30px_32px] max-650:p-[24px_20px] border border-white/72 rounded-[20px] bg-[linear-gradient(135deg,rgba(255,253,249,.52),rgba(238,224,214,.30))] shadow-[inset_0_1px_0_rgba(255,255,255,.72),0_18px_45px_rgba(71,57,47,.10)]">
+<h5 class="m-0 mb-2 text-[19px] font-extrabold text-ink">Teaching Assistant</h5>
+<p class="max-w-[820px] m-0 mb-2 text-ink text-[13px] font-semibold leading-[1.75]">International Islamic University Chittagong (IIUC)</p>
+<small class="text-[#756963] text-[11px] font-semibold leading-[1.7]">Commenced in February 2026 and successfully completed in July 2026.</small>
+</article>
+</div>
+</div>
+<!-- ==================== CERTIFICATES ==================== -->
+<div class="showcase-panel scroll-mt-[120px] p-9 max-650:p-[25px_18px] rounded-[28px] bg-[linear-gradient(135deg,rgba(255,250,244,.34),rgba(220,205,191,.16))] border border-white/72 shadow-[inset_0_1px_0_rgba(255,255,255,.72),inset_0_-1px_0_rgba(112,91,76,.05),0_24px_70px_rgba(71,57,47,.12)] backdrop-blur-[22px]" id="showcase-certificates">
+<div class="flex items-end justify-between max-650:items-start max-650:flex-col gap-[25px] mb-8">
+<div>
+<p class="m-0 mb-[7px] text-mauve text-[9px] font-extrabold tracking-[.14em] uppercase">04 — SHOWCASE</p>
+<h3 class="m-0 font-display text-[clamp(34px,4vw,50px)] leading-none tracking-[-.045em]">My <span class="text-mauve">Certificates</span></h3>
+<small class="block mt-[10px] text-soft-ink text-[11px] leading-[1.7]">Certifications and courses I have completed.</small>
+</div>
+<a class="px-[13px] py-[9px] border border-ink/10 rounded-full text-soft-ink bg-white/30 text-[9px] font-extrabold whitespace-nowrap transition-all duration-[250ms] hover:text-ivory hover:bg-ink" href="#showcases">Back to Showcases ↑</a>
+</div>
+<div class="certificate-grid-horizontal" id="certificateGrid">
+
+</div>
+</div>
+<!-- ==================== PUBLISHED PAPERS ==================== -->
+<div class="showcase-panel scroll-mt-[120px] p-9 max-650:p-[25px_18px] rounded-[28px] bg-[linear-gradient(135deg,rgba(255,250,244,.34),rgba(220,205,191,.16))] border border-white/72 shadow-[inset_0_1px_0_rgba(255,255,255,.72),inset_0_-1px_0_rgba(112,91,76,.05),0_24px_70px_rgba(71,57,47,.12)] backdrop-blur-[22px]" id="showcase-papers">
+<div class="flex items-end justify-between max-650:items-start max-650:flex-col gap-[25px] mb-8">
+<div>
+<p class="m-0 mb-[7px] text-mauve text-[9px] font-extrabold tracking-[.14em] uppercase">05 — SHOWCASE</p>
+<h3 class="m-0 font-display text-[clamp(34px,4vw,50px)] leading-none tracking-[-.045em]">Published <span class="text-mauve">Papers</span></h3>
+<small class="block mt-[10px] text-soft-ink text-[11px] leading-[1.7]">Research papers I have co-authored and published.</small>
+</div>
+<a class="px-[13px] py-[9px] border border-ink/10 rounded-full text-soft-ink bg-white/30 text-[9px] font-extrabold whitespace-nowrap transition-all duration-[250ms] hover:text-ivory hover:bg-ink" href="#showcases">Back to Showcases ↑</a>
+</div>
+<!-- ==================== PUBLISHED PAPERS ====================
+               Add your published paper below: replace the image, title, journal/
+               conference name, year, and link (href). Duplicate the <a> block
+               for more papers. -->
+<div class="paper-grid grid grid-cols-2 max-650:grid-cols-1 gap-5">
+<a class="paper-card group block overflow-hidden border border-white/72 rounded-[20px] bg-[linear-gradient(135deg,rgba(255,253,249,.52),rgba(238,224,214,.28))] shadow-[inset_0_1px_0_rgba(255,255,255,.72),0_18px_45px_rgba(71,57,47,.10)] transition-all duration-[280ms] hover:-translate-y-1 hover:bg-white/40" href="https://doi.org/10.1109/QPAIN69676.2026.11545555" rel="noopener" target="_blank">
+<div class="relative overflow-hidden bg-[rgba(235,224,213,.35)]">
+<img alt="IEEE paper: Machine Learning and Computational Intelligence Approaches for Prediction and Management of Polycystic Ovary Syndrome" class="w-full aspect-[4/3] object-cover object-top block transition-transform duration-[400ms] group-hover:scale-[1.015]" src="paper-ieee.png"/>
+</div>
+<div class="p-4 max-650:p-4">
+<div class="flex items-start justify-between gap-5 max-650:flex-col">
+<div>
+<span class="inline-flex mb-2 px-3 py-[6px] rounded-full border border-ink/10 bg-white/50 text-[#765c68] text-[9px] font-extrabold tracking-[.12em] uppercase">Published Research Paper · 2026</span>
+<h5 class="m-0 text-[15px] max-650:text-[15px] font-extrabold text-ink leading-[1.5]">
+                        Machine Learning and Computational Intelligence Approaches for Prediction and Management of Polycystic Ovary Syndrome
+                      </h5>
+<p class="max-w-[900px] mt-3 mb-2 text-soft-ink text-[11px] max-650:text-[11px] leading-[1.75]">
+                        This research paper explores machine learning and computational intelligence approaches for the prediction and management of Polycystic Ovary Syndrome (PCOS), focusing on data-driven methods that can support earlier identification and more informed, individualized management.
+                      </p>
+</div>
+<span aria-hidden="true" class="w-[42px] h-[42px] flex-none grid place-items-center border border-ink/10 rounded-full bg-white/45 text-ink text-[17px] transition-all duration-[250ms] group-hover:bg-ink group-hover:text-ivory group-hover:rotate-45">↗</span>
+</div>
+</div>
+</a>
+
+</div>
+</div>
+</div>
+</section>
+<!-- =========================================================
+         PROJECT DETAILS MODAL
+         ========================================================= -->
+<div aria-hidden="true" class="future-paper-modal project-details-modal" hidden="" id="projectDetailsModal">
+<div aria-labelledby="projectDetailsTitle" aria-modal="true" class="future-paper-dialog project-details-dialog" role="dialog">
+<div class="flex items-start justify-between gap-4 mb-5">
+<div>
+<p class="m-0 mb-1 text-mauve text-[9px] font-extrabold tracking-[.14em] uppercase">Project Details</p>
+<h4 class="m-0 font-display text-[28px] font-bold leading-none tracking-[-.03em]" id="projectDetailsTitle">Project</h4>
+</div>
+<button aria-label="Close project details" class="w-[36px] h-[36px] flex-none grid place-items-center rounded-full border border-ink/10 bg-white/45 text-ink text-[18px] cursor-pointer" id="projectDetailsClose" type="button">×</button>
+</div>
+<div class="project-details-content">
+<p class="m-0 text-soft-ink text-[12px] leading-[1.9] whitespace-pre-line" id="projectDetailsDescription"></p>
+</div>
+<div class="future-paper-actions project-details-actions">
+<button class="future-paper-cancel" id="projectDetailsCloseBottom" type="button">Close</button>
+</div>
+</div>
+</div>
+<!-- =========================================================
+         CERTIFICATE IMAGE VIEWER
+         ========================================================= -->
+<div aria-hidden="true" class="certificate-image-modal" hidden="" id="certificateImageModal">
+<div aria-label="Certificate image viewer" aria-modal="true" class="certificate-image-dialog" role="dialog">
+<button aria-label="Close certificate image" class="certificate-image-close" id="certificateImageClose" type="button">×</button>
+<img alt="Certificate full view" id="certificateImageViewer" src=""/>
+</div>
+</div>
+<!-- =========================================================
+         CONTACT
+         ========================================================= -->
+<section class="w-[min(1180px,calc(100%-40px))] max-650:w-[min(calc(100%-26px),1180px)] mx-auto pt-[95px] pb-[90px] max-650:pt-[78px] max-650:pb-[78px]" id="contact">
+<div class="relative grid grid-cols-[minmax(0,.9fr)_minmax(420px,1.1fr)] max-1120:grid-cols-1 gap-0 p-0 overflow-hidden border border-white/74 rounded-[32px] max-650:rounded-[24px] bg-[radial-gradient(circle_at_10%_12%,rgba(255,255,255,.42),transparent_26%),radial-gradient(circle_at_90%_85%,rgba(165,142,145,.20),transparent_31%),linear-gradient(135deg,rgba(242,232,222,.78),rgba(213,198,184,.58))] after:content-[''] after:absolute after:w-[420px] after:h-[420px] after:right-[-180px] after:bottom-[-220px] after:rounded-full after:bg-[rgba(165,142,145,.16)]">
+<div class="relative z-[2] p-[clamp(38px,5vw,66px)] max-650:p-[30px_24px] border-r border-[rgba(89,79,73,.10)] max-1120:border-r-0 max-1120:border-b">
+<div class="flex items-center gap-[10px] mb-5">
+<span class="w-[9px] h-[9px] rounded-full bg-mauve shadow-[0_0_0_5px_rgba(165,142,145,.12)]"></span>
+<p class="m-0 text-mauve text-[10px] font-extrabold tracking-[.16em]">CONTACT ME</p>
+</div>
+<h2 class="m-0 font-display text-[clamp(50px,5.8vw,76px)] max-650:text-[clamp(46px,15vw,66px)] leading-[.92] tracking-[-.055em]">
+            Get in <em class="block italic text-mauve">Touch.</em>
+</h2>
+<p class="max-w-[480px] mt-[25px] mb-0 text-soft-ink text-[13px] leading-[1.85]">
+            Have an idea, project, or collaboration in mind? Feel free to reach out.
+            I would love to connect, learn, and build something meaningful together.
+          </p>
+<div class="grid gap-3 mt-[30px]">
+<a class="flex items-center gap-3 py-3" href="mailto:abidaisratjahan64@gmail.com">
+<span aria-hidden="true" class="w-[39px] h-[39px] flex-none grid place-items-center border border-white/76 rounded-[13px] text-mauve bg-white/36 shadow-[0_8px_22px_rgba(71,57,47,.06)]">
+<svg class="w-[18px] h-[18px] fill-none stroke-current stroke-[1.8]" stroke-linecap="round" stroke-linejoin="round" viewbox="0 0 24 24">
+<path d="M3.5 5h17A1.5 1.5 0 0 1 22 6.5v11A1.5 1.5 0 0 1 20.5 19h-17A1.5 1.5 0 0 1 2 17.5v-11A1.5 1.5 0 0 1 3.5 5Zm.1 2.2 8.05 5.92a.6.6 0 0 0 .7 0L20.4 7.2"></path>
+</svg>
+</span>
+<span class="grid gap-1 max-650:break-words">
+<small class="text-muted text-[9px] font-extrabold tracking-[.09em] uppercase">Email</small>
+<strong class="text-soft-ink text-[12px] max-650:text-[11px] font-bold max-650:[overflow-wrap:anywhere]">abidaisratjahan64@gmail.com</strong>
+</span>
+</a>
+<div class="flex items-center gap-3 py-3">
+<span aria-hidden="true" class="w-[39px] h-[39px] flex-none grid place-items-center border border-white/76 rounded-[13px] text-mauve bg-white/36 shadow-[0_8px_22px_rgba(71,57,47,.06)]">
+<svg class="w-[18px] h-[18px] fill-none stroke-current stroke-[1.8]" stroke-linecap="round" stroke-linejoin="round" viewbox="0 0 24 24">
+<path d="M12 21s7-5.1 7-11A7 7 0 1 0 5 10c0 5.9 7 11 7 11Z"></path>
+<circle cx="12" cy="10" r="2.2"></circle>
+</svg>
+</span>
+<span class="grid gap-1">
+<small class="text-muted text-[9px] font-extrabold tracking-[.09em] uppercase">Location</small>
+<strong class="text-soft-ink text-[12px] max-650:text-[11px] font-bold">Chittagong, Bangladesh</strong>
+</span>
+</div>
+</div>
+<div aria-label="Social links" class="flex flex-wrap gap-[10px] max-650:gap-2 mt-[26px]">
+<a aria-label="WhatsApp" class="w-[42px] h-[42px] grid place-items-center border border-white/78 rounded-[13px] text-soft-ink bg-white/34 shadow-[0_8px_22px_rgba(71,57,47,.06)] transition-all duration-[250ms] hover:text-ivory hover:bg-ink hover:shadow-[0_14px_28px_rgba(71,57,47,.14)] hover:-translate-y-1" href="https://wa.me/8801781010421" rel="noopener" target="_blank" title="WhatsApp">
+<svg class="w-[19px] h-[19px] fill-current" viewbox="0 0 24 24"><path d="M20.5 3.5A11.4 11.4 0 0 0 2.8 17.2L2 22l4.9-1.3A11.5 11.5 0 1 0 20.5 3.5Zm-8.5 17a9.4 9.4 0 0 1-4.8-1.3l-.35-.2-2.9.76.78-2.82-.23-.37A9.5 9.5 0 1 1 12 20.5Zm5.2-7.1c-.28-.14-1.65-.82-1.9-.91-.26-.1-.45-.14-.64.14-.19.28-.73.91-.9 1.1-.16.19-.33.21-.6.07-1.64-.82-2.72-1.46-3.8-3.31-.29-.5.29-.47.82-1.56.09-.19.05-.35-.02-.49-.07-.14-.64-1.54-.88-2.1-.23-.55-.47-.48-.64-.49h-.55c-.19 0-.49.07-.75.35-.26.28-.99.97-.99 2.36 0 1.39 1.01 2.73 1.15 2.92.14.19 1.98 3.02 4.79 4.24.67.29 1.2.46 1.61.59.68.22 1.3.19 1.79.12.55-.08 1.65-.68 1.88-1.34.23-.66.23-1.22.16-1.34-.07-.12-.25-.19-.52-.33Z"></path></svg>
+</a>
+<a aria-label="Facebook" class="w-[42px] h-[42px] grid place-items-center border border-white/78 rounded-[13px] text-soft-ink bg-white/34 shadow-[0_8px_22px_rgba(71,57,47,.06)] transition-all duration-[250ms] hover:text-ivory hover:bg-ink hover:shadow-[0_14px_28px_rgba(71,57,47,.14)] hover:-translate-y-1" href="https://www.facebook.com/isratjahan.abida.524" rel="noopener" target="_blank" title="Facebook">
+<svg class="w-[19px] h-[19px] fill-current" viewbox="0 0 24 24"><path d="M13.7 21v-8h2.7l.4-3h-3.1V8.1c0-.87.24-1.46 1.5-1.46H16.8V3.96c-.28-.04-1.22-.12-2.32-.12-2.3 0-3.87 1.4-3.87 3.98V10H8v3h2.61v8h3.09Z"></path></svg>
+</a>
+<a aria-label="LinkedIn" class="w-[42px] h-[42px] grid place-items-center border border-white/78 rounded-[13px] text-soft-ink bg-white/34 shadow-[0_8px_22px_rgba(71,57,47,.06)] transition-all duration-[250ms] hover:text-ivory hover:bg-ink hover:shadow-[0_14px_28px_rgba(71,57,47,.14)] hover:-translate-y-1" href="https://www.linkedin.com/in/israt-jahan-abida-7b231437a/" rel="noopener" target="_blank" title="LinkedIn">
+<svg class="w-[19px] h-[19px] fill-current" viewbox="0 0 24 24"><path d="M6.3 8.2A1.8 1.8 0 1 1 6.3 4.6a1.8 1.8 0 0 1 0 3.6ZM4.7 9.8h3.2V19H4.7V9.8Zm5.1 0h3.05v1.26h.04c.43-.8 1.47-1.65 3.02-1.65 3.23 0 3.83 2.12 3.83 4.88V19h-3.18v-4.18c0-1 0-2.29-1.4-2.29s-1.62 1.09-1.62 2.22V19H9.8V9.8Z"></path></svg>
+</a>
+<a aria-label="GitHub" class="w-[42px] h-[42px] grid place-items-center border border-white/78 rounded-[13px] text-soft-ink bg-white/34 shadow-[0_8px_22px_rgba(71,57,47,.06)] transition-all duration-[250ms] hover:text-ivory hover:bg-ink hover:shadow-[0_14px_28px_rgba(71,57,47,.14)] hover:-translate-y-1" href="https://github.com/isratjahanabida" rel="noopener" target="_blank" title="GitHub">
+<svg class="w-[19px] h-[19px] fill-current" viewbox="0 0 24 24"><path d="M12 2.2a9.8 9.8 0 0 0-3.1 19.1c.5.1.7-.2.7-.5v-1.9c-2.8.6-3.4-1.2-3.4-1.2-.5-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 0 1.6 1 1.6 1 .9 1.6 2.3 1.2 2.9.9.1-.7.4-1.2.7-1.5-2.2-.3-4.5-1.1-4.5-5a3.9 3.9 0 0 1 1-2.7c-.1-.3-.4-1.3.1-2.7 0 0 .8-.3 2.7 1a9.2 9.2 0 0 1 4.9 0c1.9-1.3 2.7-1 2.7-1 .5 1.4.2 2.4.1 2.7a3.9 3.9 0 0 1 1 2.7c0 3.9-2.3 4.7-4.5 5 .4.3.7.9.7 1.8v2.7c0 .3.2.6.7.5A9.8 9.8 0 0 0 12 2.2Z"></path></svg>
+</a>
+</div>
+</div>
+<div class="relative z-[2] p-[clamp(34px,5vw,64px)] max-650:p-[30px_24px] bg-[linear-gradient(135deg,rgba(89,73,78,.10),rgba(255,255,255,.24)),rgba(255,255,255,.16)] backdrop-blur-[18px]">
+<div>
+<span class="text-mauve text-[9px] font-extrabold tracking-[.14em]">LET'S START A CONVERSATION</span>
+<h3 class="mt-[11px] mb-[27px] font-display text-[clamp(34px,4vw,50px)] leading-[.95] tracking-[-.045em]">Send a <em class="italic text-mauve">message</em></h3>
+</div>
+<form action="https://formsubmit.co/abidaisratjahan64@gmail.com" class="grid gap-4" enctype="multipart/form-data" method="POST">
+<input name="_subject" type="hidden" value="New Portfolio Contact Message — Israt Jahan Abida"/>
+<input name="_captcha" type="hidden" value="false"/>
+<input name="_template" type="hidden" value="table"/>
+<label class="grid gap-2">
+<span class="text-soft-ink text-[10px] font-extrabold">Your Name</span>
+<input class="w-full h-[46px] px-[14px] border border-[rgba(89,79,73,.12)] rounded-[13px] outline-none text-ink bg-white/44 shadow-[inset_0_1px_0_rgba(255,255,255,.48)] font-[inherit] text-[12px] transition-all duration-200 placeholder:text-[#9b9089] focus:border-[rgba(165,142,145,.62)] focus:bg-white/62 focus:shadow-[0_0_0_4px_rgba(165,142,145,.10)]" name="name" placeholder="Enter your name" required="" type="text"/>
+</label>
+<label class="grid gap-2">
+<span class="text-soft-ink text-[10px] font-extrabold">Your Email</span>
+<input class="w-full h-[46px] px-[14px] border border-[rgba(89,79,73,.12)] rounded-[13px] outline-none text-ink bg-white/44 shadow-[inset_0_1px_0_rgba(255,255,255,.48)] font-[inherit] text-[12px] transition-all duration-200 placeholder:text-[#9b9089] focus:border-[rgba(165,142,145,.62)] focus:bg-white/62 focus:shadow-[0_0_0_4px_rgba(165,142,145,.10)]" name="email" placeholder="Enter your email" required="" type="email"/>
+</label>
+<label class="grid gap-2">
+<span class="text-soft-ink text-[10px] font-extrabold">Your Message</span>
+<textarea class="w-full min-h-[132px] p-[13px_14px] border border-[rgba(89,79,73,.12)] rounded-[13px] outline-none resize-y text-ink bg-white/44 shadow-[inset_0_1px_0_rgba(255,255,255,.48)] font-[inherit] text-[12px] transition-all duration-200 placeholder:text-[#9b9089] focus:border-[rgba(165,142,145,.62)] focus:bg-white/62 focus:shadow-[0_0_0_4px_rgba(165,142,145,.10)]" name="message" placeholder="Write your message here..." required="" rows="5"></textarea>
+</label>
+<button class="min-h-[49px] inline-flex items-center justify-center gap-3 mt-[3px] border border-white/76 rounded-[13px] text-ivory bg-ink shadow-[0_12px_28px_rgba(71,57,47,.16)] font-[inherit] text-[12px] font-extrabold cursor-pointer transition-all duration-[250ms] hover:bg-[#413936] hover:shadow-[0_17px_32px_rgba(71,57,47,.20)] hover:-translate-y-[3px]" type="submit">
+<span>Send Message</span>
+<span aria-hidden="true" class="text-[#d8bec0] text-[16px]">↗</span>
+</button>
+</form>
+</div>
+</div>
+</section>
+</main>
+<footer class="flex items-center justify-between max-650:items-start max-650:flex-col gap-5 py-7 pb-[38px] border-t border-ink/10 text-[#81766e] text-[9px] tracking-[.05em] uppercase w-[min(1180px,calc(100%-40px))] max-650:w-[min(calc(100%-26px),1180px)] mx-auto">
+<span>© 2026 Israt Jahan Abida</span>
+<a class="text-ink font-extrabold" href="#home">Back to top ↑</a>
+</footer>
+
+
+
+<script>
+(() => {
+  'use strict';
+
+  const $ = (selector, root = document) => root.querySelector(selector);
+  const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
+  const makeId = () => (window.crypto && typeof window.crypto.randomUUID === 'function')
+    ? window.crypto.randomUUID() : String(Date.now()) + Math.random().toString(16).slice(2);
+  const esc = value => String(value ?? '').replace(/[&<>'"]/g, c => ({
+    '&':'&amp;', '<':'&lt;', '>':'&gt;', "'":'&#39;', '"':'&quot;'
+  }[c]));
+
+  const storage = {
+    read(key) {
+      try { const value = JSON.parse(localStorage.getItem(key) || '[]'); return Array.isArray(value) ? value : []; }
+      catch { return []; }
+    },
+    write(key, value) {
+      try { localStorage.setItem(key, JSON.stringify(value)); return true; }
+      catch { alert('Browser storage is full. Please use a smaller image.'); return false; }
+    }
+  };
+
+  const readFile = file => new Promise((resolve, reject) => {
+    if (!file || !file.size) return resolve('');
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+
+  // Compress uploaded images so localStorage is much less likely to fail.
+  const imageToDataURL = file => new Promise((resolve, reject) => {
+    if (!file || !file.size) return resolve('');
+    const reader = new FileReader();
+    reader.onload = () => {
+      const img = new Image();
+      img.onload = () => {
+        const max = 1800;
+        const scale = Math.min(1, max / Math.max(img.naturalWidth || img.width, img.naturalHeight || img.height));
+        const canvas = document.createElement('canvas');
+        canvas.width = Math.max(1, Math.round((img.naturalWidth || img.width) * scale));
+        canvas.height = Math.max(1, Math.round((img.naturalHeight || img.height) * scale));
+        const ctx = canvas.getContext('2d');
+        if (!ctx) return resolve(reader.result);
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        resolve(canvas.toDataURL('image/jpeg', 0.88));
+      };
+      img.onerror = () => resolve(reader.result);
+      img.src = reader.result;
+    };
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+
+  const openModal = modal => {
+    if (!modal) return;
+    modal.hidden = false;
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  };
+  const closeModal = modal => {
+    if (!modal) return;
+    modal.hidden = true;
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  };
+
+  /* ============================================================
+     CERTIFICATES — view only
+     ============================================================ */
+  const CERT_KEY = 'isratJahanAbidaCertificates';
+  const certGrid = $('#certificateGrid');
+
+  const getCertificates = () => {
+    const items = storage.read(CERT_KEY);
+    let changed = false;
+    const normalized = items.map(c => {
+      if (c.id) return c;
+      changed = true;
+      return { ...c, id: makeId() };
+    });
+    if (changed) storage.write(CERT_KEY, normalized);
+    return normalized;
+  };
+
+  const showCertificateImage = cert => {
+    const viewer = $('#certificateImageViewer');
+    const modal = $('#certificateImageModal');
+    if (!viewer || !modal || !cert?.image) return;
+    viewer.src = cert.image;
+    viewer.alt = cert.description || 'Certificate full view';
+    openModal(modal);
+  };
+
+  const certificateCard = cert => {
+    const card = document.createElement('article');
+    card.className = 'certificate-card';
+    card.dataset.id = cert.id;
+    card.innerHTML = `
+      <div class="certificate-image-wrap">
+        <button type="button" class="certificate-image-button" aria-label="View certificate full size">
+          <img src="${esc(cert.image)}" alt="Certificate" class="certificate-image">
+        </button>
+      </div>
+      <p class="m-0 mt-3 text-[#756963] text-[10px] leading-[1.7]">${esc(cert.description)}</p>
+      <div class="certificate-card-actions">
+        <button type="button" class="certificate-view-btn">View Certificate</button>
+      </div>`;
+    card.querySelector('.certificate-image-button').addEventListener('click', () => showCertificateImage(cert));
+    card.querySelector('.certificate-view-btn').addEventListener('click', () => showCertificateImage(cert));
+    return card;
+  };
+
+  const renderCertificates = () => {
+    if (!certGrid) return;
+    $$('.certificate-card', certGrid).forEach(card => card.remove());
+    getCertificates().forEach(cert => certGrid.appendChild(certificateCard(cert)));
+  };
+
+  $('#certificateImageClose')?.addEventListener('click', () => closeModal($('#certificateImageModal')));
+  $('#certificateImageModal')?.addEventListener('click', e => { if (e.target.id === 'certificateImageModal') closeModal(e.currentTarget); });
+  renderCertificates();
+
+  /* ============================================================
+     PROJECTS — view only
+     ============================================================ */
+  const PROJECT_KEY = 'isratJahanAbidaProjects';
+  const projectGrid = $('#showcase-projects > div:nth-of-type(2)');
+
+  const getProjects = () => {
+    const items = storage.read(PROJECT_KEY);
+    let changed = false;
+    const normalized = items.map(p => {
+      if (p.id) return p;
+      changed = true;
+      return { ...p, id: makeId() };
+    });
+    if (changed) storage.write(PROJECT_KEY, normalized);
+    return normalized;
+  };
+
+  /* ============================================================
+     PROJECT DETAILS
+     ============================================================ */
+  const projectDetailsModal = $('#projectDetailsModal');
+  const projectDetailsTitle = $('#projectDetailsTitle');
+  const projectDetailsDescription = $('#projectDetailsDescription');
+  const showProjectDetails = (title, description) => {
+    if (!projectDetailsModal) return;
+    if (projectDetailsTitle) projectDetailsTitle.textContent = title || 'Project';
+    if (projectDetailsDescription) projectDetailsDescription.textContent = description || 'No description available.';
+    openModal(projectDetailsModal);
+  };
+  $('#projectDetailsClose')?.addEventListener('click', () => closeModal(projectDetailsModal));
+  $('#projectDetailsCloseBottom')?.addEventListener('click', () => closeModal(projectDetailsModal));
+  projectDetailsModal?.addEventListener('click', e => { if (e.target === projectDetailsModal) closeModal(projectDetailsModal); });
+  $$('[data-project-details]').forEach(btn => btn.addEventListener('click', () => showProjectDetails(btn.dataset.projectTitle, btn.dataset.projectDescription)));
+
+  const githubSvg = `<svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .7a11.3 11.3 0 0 0-3.57 22.02c.56.1.77-.24.77-.54v-2.13c-3.13.68-3.79-1.33-3.79-1.33-.51-1.3-1.25-1.65-1.25-1.65-1.02-.7.08-.69.08-.69 1.13.08 1.72 1.16 1.72 1.16 1 .1.85 1.78 3.78 1.27.09-.71.39-1.2.71-1.48-2.5-.29-5.13-1.25-5.13-5.56 0-1.23.44-2.24 1.16-3.03-.12-.29-.5-1.44.11-3 0 0 .95-.31 3.11 1.16A10.8 10.8 0 0 1 12 7.2c.96 0 1.92.13 2.82.39 2.16-1.47 3.11-1.16 3.11-1.16.61 1.56.23 2.71.11 3 .72.79 1.16 1.8 1.16 3.03 0 4.32-2.64 5.27-5.15 5.55.4.35.75 1.04.75 2.1v3.12c0 .3.2.65.78.54A11.3 11.3 0 0 0 12 .7Z"/></svg>`;
+
+  const projectCard = project => {
+    const card = document.createElement('article');
+    card.className = 'dynamic-project-card';
+    const githubLink = project.github || project.link || 'https://github.com/isratjahanabida';
+    card.innerHTML = `<div class="dynamic-project-image">${project.image ? `<img src="${esc(project.image)}" alt="${esc(project.title)}">` : '<div style="height:100%;display:grid;place-items:center;font-size:54px;color:rgba(255,255,255,.78)">✦</div>'}</div><div class="dynamic-project-body"><span class="inline-flex w-max mb-2 px-3 py-[6px] rounded-full border border-ink/10 bg-white/50 text-[#765c68] text-[9px] font-extrabold tracking-[.12em] uppercase">${esc(project.category)}</span><h4 class="m-0 text-[15px] font-extrabold">${esc(project.title)}</h4><p class="mt-2 mb-0 text-soft-ink text-[10px] leading-[1.7]">${esc(project.description)}</p><div class="dynamic-project-actions project-card-actions"><a aria-label="Open GitHub" class="project-github-btn" href="${esc(githubLink)}" target="_blank" rel="noopener" title="Open GitHub">${githubSvg}</a><button type="button" class="project-details-btn" data-project-details>Details</button></div></div>`;
+    card.querySelector('[data-project-details]').addEventListener('click', () => showProjectDetails(project.title, project.description));
+    return card;
+  };
+
+  const renderProjects = () => {
+    if (!projectGrid) return;
+    $$('.dynamic-project-card', projectGrid).forEach(card => card.remove());
+    getProjects().forEach(project => projectGrid.appendChild(projectCard(project)));
+  };
+  renderProjects();
+
+  /* ============================================================
+     SECTION / HOME ANIMATIONS
+     ============================================================ */
+  $$('.hero-label, #home h1, #home .hero-description, #home .hero-actions, #home .hero-socials').forEach((el, i) => {
+    el.classList.add('hero-load');
+    el.style.animationDelay = `${i * 0.12}s`;
+  });
+  const revealTargets = $$('.showcase-panel, #about, #contact, #showcases > div, #showcase-projects article, .paper-card, .certificate-card');
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver(entries => entries.forEach(entry => {
+      if (entry.isIntersecting) { entry.target.classList.add('revealed'); observer.unobserve(entry.target); }
+    }), { threshold: 0.12 });
+    revealTargets.forEach((el, i) => { el.classList.add('reveal-item'); if (i % 3 === 1) el.classList.add('from-left'); if (i % 3 === 2) el.classList.add('from-right'); observer.observe(el); });
+  } else revealTargets.forEach(el => el.classList.add('revealed'));
+
+  const aboutImage = $('#about .relative.flex.justify-center');
+  const aboutText = $('#about .self-center');
+  [aboutImage, aboutText].forEach(el => el?.classList.add('motion-section'));
+  aboutImage?.classList.add('motion-left');
+  aboutText?.classList.add('motion-right');
+  if ('IntersectionObserver' in window) {
+    const aboutObserver = new IntersectionObserver(entries => entries.forEach(entry => {
+      if (entry.isIntersecting) { entry.target.classList.add('in-view'); aboutObserver.unobserve(entry.target); }
+    }), { threshold: 0.12 });
+    [aboutImage, aboutText].forEach(el => el && aboutObserver.observe(el));
+  } else [aboutImage, aboutText].forEach(el => el?.classList.add('in-view'));
+
+  // ESC closes every custom modal.
+  document.addEventListener('keydown', e => {
+    if (e.key !== 'Escape') return;
+    [certModal, $('#certificateImageModal'), projectDetailsModal, projectModal].forEach(modal => {
+      if (modal && !modal.hidden) closeModal(modal);
+    });
+    resetCertificateForm(); resetProjectForm();
+  });
+})();
+</script></body>
+</html>
